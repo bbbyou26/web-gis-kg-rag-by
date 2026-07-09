@@ -439,7 +439,7 @@ function initTypewriterEffect() {
     const targets = [
         { selector: '.hero-content h1', text: 'Membangun Ekosistem UMKM Berbasis Data untuk Mendorong Pertumbuhan Ekonomi Lokal' },
         { selector: '.tentang-intro h2', text: 'Pentingnya Digitalisasi & Integrasi UMKM' },
-        { selector: '.uji-coba-intro h2', text: 'Solusi yang Ditawarkan' },
+        { selector: '.uji-coba-intro h2', text: 'Visualisasi Solusi yang Ditawarkan' },
         { selector: '#dampak h2', text: 'Dampak Nyata Untuk Setiap Pemangku Kepentingan' },
         { selector: '.research-title', text: 'RANCANG BANGUN APLIKASI WEB GIS BERBASIS KNOWLEDGE GRAPH DAN RETRIEVAL-AUGMENTED GENERATION (RAG) UNTUK PEMETAAN DAN VISUALISASI LINGKUNGAN USAHA LOKAL' },
         { selector: '.profile-name', text: 'Bayu Dwi Prasetyo' },
