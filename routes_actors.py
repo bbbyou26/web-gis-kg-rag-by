@@ -97,7 +97,7 @@ def save_actor():
         a.embedding         = $embedding,
         a.landing_page_text = $landing_page_text
     """
-    with driver.session(database="pp1") as neo_session:
+    with driver.session() as neo_session:
         neo_session.run(
             query,
             act_id=actor_id, act_type=actor_type, name=name,
@@ -120,7 +120,7 @@ def get_actors():
     """
     actors = []
     try:
-        with driver.session(database="pp1") as neo_session:
+        with driver.session() as neo_session:
             for record in neo_session.run(query):
                 raw = {}
                 if record["raw_data"]:
@@ -148,7 +148,7 @@ def get_actors():
 def delete_actor():
     actor_id = request.get_json().get("id")
     query    = "MATCH (a:Actor {id: $act_id}) DETACH DELETE a"
-    with driver.session(database="pp1") as neo_session:
+    with driver.session() as neo_session:
         neo_session.run(query, act_id=actor_id)
     return jsonify({"success": True})
 
@@ -176,7 +176,7 @@ def landing_page_builder():
     MATCH (a:Actor {id: $act_id})
     RETURN a.name AS name, a.raw_data AS raw_data
     """
-    with driver.session(database="pp1") as neo_session:
+    with driver.session() as neo_session:
         result = neo_session.run(query, act_id=actor_id).single()
         if not result:
             return "Actor not found", 404
@@ -234,7 +234,7 @@ def save_landing_page(actor_id):
     landing_page_text = "\n\n".join(clean_texts)
 
     get_query = "MATCH (a:Actor {id: $act_id}) RETURN a.raw_data AS raw_data"
-    with driver.session(database="pp1") as neo_session:
+    with driver.session() as neo_session:
         result = neo_session.run(get_query, act_id=actor_id).single()
         if not result:
             return jsonify({"success": False, "error": "Actor not found"}), 404
