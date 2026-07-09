@@ -282,3 +282,86 @@ section {
     conic-gradient(from var(--border-angle), var(--navy-dark) 0%, var(--navy-dark) 70%, var(--primary) 85%, var(--secondary) 95%, var(--navy-dark) 100%) border-box !important;
   animation: spin-border 4s linear infinite !important;
 }
+
+/* ==========================================================================
+   SIMULATOR LAUNCH TRANSITION ANIMATIONS (THROWING BALL & RIPPLE)
+   ========================================================================== */
+
+/* Throwing Ball Particle */
+.throwing-ball {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: radial-gradient(circle, var(--primary), var(--secondary));
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    box-shadow: 0 0 15px rgba(56, 160, 196, 0.6), 0 0 30px rgba(141, 152, 224, 0.4);
+    animation: throw-and-bounce 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes throw-and-bounce {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 1;
+    }
+    40% {
+        /* Parabolic peak height */
+        transform: translate3d(calc(var(--dx) * 0.4), calc(var(--dy) * 0.3 - 120px), 0) scale(1.3);
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate3d(var(--dx), var(--dy), 0) scale(0.2);
+        opacity: 0;
+    }
+}
+
+/* Landing Ripple Impact Splash */
+.landing-ripple {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    z-index: 9998;
+    pointer-events: none;
+    box-shadow: 0 0 15px rgba(56, 160, 196, 0.4);
+    transform: translate(-50%, -50%);
+    animation: ripple-splash 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes ripple-splash {
+    0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 1;
+        border-color: var(--primary);
+    }
+    50% {
+        border-color: var(--secondary);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0;
+        border-color: transparent;
+    }
+}
+
+/* Premium Reveal Scale-in Animation for Cards */
+.simulator-card.entry-anim {
+    animation: spin-border 4s linear infinite, premium-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+@keyframes premium-pop {
+    0% {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+

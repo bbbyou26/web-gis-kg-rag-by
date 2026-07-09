@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initBufferingSimulator();
     initTypewriterEffect();
     initSimulatorToggles();
+    initTentangCardToggle();
 });
 
 /**
@@ -265,19 +266,22 @@ function initBuilderSimulator() {
             title: "Kopi Cantik Belimbing",
             sector: "Kuliner - Kafe Kopi",
             desc: "Kopi arabika pilihan dengan cita rasa autentik, tersedia dalam seduhan manual dan kemasan bubuk untuk dinikmati kapan saja.",
-            url: "2211080.id/kopidicantik"
+            url: "2211080.id/kopidicantik",
+            image: "/static/image/kopi cantik belimbing.png"
         },
         mebel: {
             title: "Mebel Jati Abadi",
             sector: "Manufaktur - Kerajinan Kayu",
             desc: "Penyedia furnitur jati berkualitas tinggi langsung dari pengrajin terpercaya dengan ketahanan produk hingga puluhan tahun.",
-            url: "2211080.id/mebeljatiabadi"
+            url: "2211080.id/mebeljatiabadi",
+            image: "/static/image/mebel jati abadi.png"
         },
         kerajinan: {
             title: "Kerajinan Bambu Jaya",
             sector: "Industri Kreatif - Anyaman",
             desc: "Produk kerajinan anyaman bambu ramah lingkungan berkualitas ekspor untuk memperindah ruang interior hunian modern Anda.",
-            url: "2211080.id/bambujaya"
+            url: "2211080.id/bambujaya",
+            image: "/static/image/kerajinan bambu jaya.png"
         }
     };
 
@@ -299,7 +303,10 @@ function initBuilderSimulator() {
     const applyTheme = (theme) => {
         const config = themeConfig[theme];
         if (config) {
-            previewBanner.style.background = config.gradient;
+            const previewImg = document.getElementById('preview-image');
+            if (previewImg) {
+                previewImg.style.borderColor = config.color;
+            }
             previewTitle.style.color = config.color;
             previewSector.style.color = config.color;
             if (previewBtnVisit) {
@@ -318,6 +325,11 @@ function initBuilderSimulator() {
             previewSector.textContent = data.sector;
             previewDesc.textContent = data.desc;
             if (previewUrl) previewUrl.textContent = data.url;
+            
+            const previewImg = document.getElementById('preview-image');
+            if (previewImg && data.image) {
+                previewImg.src = data.image;
+            }
         }
     });
 
@@ -479,7 +491,7 @@ function initTypewriterEffect() {
 }
 
 /**
- * 8. SIMULATOR TABS / TOGGLES
+ * 8. SIMULATOR TABS / TOGGLES (WITH THROWING BALL TRANSITION)
  */
 function initSimulatorToggles() {
     const selectors = document.querySelectorAll('.sim-selector-card');
@@ -495,24 +507,98 @@ function initSimulatorToggles() {
             if (selector.classList.contains('active')) {
                 // If it is active, close/hide it
                 selector.classList.remove('active');
-                if (targetCard) targetCard.classList.remove('active');
+                if (targetCard) {
+                    targetCard.classList.remove('active');
+                    targetCard.classList.remove('entry-anim');
+                }
             } else {
                 // Remove active classes from all selectors and cards
                 selectors.forEach(s => s.classList.remove('active'));
-                cards.forEach(c => c.classList.remove('active'));
+                cards.forEach(c => {
+                    c.classList.remove('active');
+                    c.classList.remove('entry-anim');
+                });
 
-                // Activate clicked target
+                // Activate clicked target selector immediately
                 selector.classList.add('active');
+
                 if (targetCard) {
-                    targetCard.classList.add('active');
-                    
-                    // Smooth scroll to the simulator card
-                    setTimeout(() => {
-                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }, 100);
+                    // Create throwing ball transition
+                    const icon = selector.querySelector('.sim-selector-icon');
+                    if (icon) {
+                        const iconRect = icon.getBoundingClientRect();
+                        const grid = document.querySelector('.uji-coba-grid');
+                        const gridRect = grid.getBoundingClientRect();
+
+                        const startX = iconRect.left + iconRect.width / 2 + window.scrollX;
+                        const startY = iconRect.top + iconRect.height / 2 + window.scrollY;
+                        const endX = gridRect.left + gridRect.width / 2 + window.scrollX;
+                        const endY = gridRect.top + window.scrollY;
+
+                        const dx = endX - startX;
+                        const dy = endY - startY;
+
+                        // Create the throwing particle
+                        const ball = document.createElement('div');
+                        ball.className = 'throwing-ball';
+                        ball.style.left = `${startX - 16}px`; // 16px is half of 32px width
+                        ball.style.top = `${startY - 16}px`;
+                        ball.style.setProperty('--dx', `${dx}px`);
+                        ball.style.setProperty('--dy', `${dy}px`);
+
+                        document.body.appendChild(ball);
+
+                        // Reveal target card when the ball reaches destination
+                        ball.addEventListener('animationend', () => {
+                            ball.remove();
+
+                            // Create landing ripple impact splash
+                            const ripple = document.createElement('div');
+                            ripple.className = 'landing-ripple';
+                            ripple.style.left = `${endX}px`;
+                            ripple.style.top = `${endY}px`;
+                            document.body.appendChild(ripple);
+
+                            ripple.addEventListener('animationend', () => {
+                                ripple.remove();
+                            });
+
+                            // Display target card with premium scaling entrance
+                            targetCard.classList.add('active');
+                            targetCard.classList.add('entry-anim');
+
+                            // Scroll to card smoothly
+                            setTimeout(() => {
+                                targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }, 50);
+                        });
+                    } else {
+                        // Fallback transition
+                        targetCard.classList.add('active');
+                        targetCard.classList.add('entry-anim');
+                    }
                 }
             }
         });
     });
 }
+
+/**
+ * 9. TENTANG CARD ACTIVE TOGGLE
+ */
+function initTentangCardToggle() {
+    const cards = document.querySelectorAll('.tentang-card');
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            const wasActive = card.classList.contains('active');
+            // Remove active from all cards
+            cards.forEach(c => c.classList.remove('active'));
+            // If the card was not active, make it active (blue style)
+            if (!wasActive) {
+                card.classList.add('active');
+            }
+        });
+    });
+}
+
 
