@@ -59,6 +59,12 @@ def index():
     return render_template("beranda.html")
 
 
+@app.route("/tentang")
+@app.route("/tentang.html")
+def tentang_page():
+    return render_template("tentang.html")
+
+
 @app.route("/auth")
 def auth_page():
     return render_template("auth.html")

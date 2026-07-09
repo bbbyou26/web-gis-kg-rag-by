@@ -106,10 +106,10 @@ function initRAGSimulator() {
     const mockDatabase = {
         q1: {
             question: "Tunjukkan persebaran UMKM Kuliner di Kecamatan Coblong.",
-            answer: `<strong>Hasil Retrieval Web GIS:</strong><br>
+            answer: `
                Ditemukan <strong>142 pelaku UMKM Kuliner</strong> terdaftar di wilayah Kecamatan Coblong.<br><br>
                <ul>
-                 <li><strong>Dago</strong>: 58 usaha (Didominasi Kafe & Resto Kopi)</li>
+                 <li><strong>Belimbing</strong>: 58 usaha (Didominasi Kafe & Resto Kopi)</li>
                  <li><strong>Sadang Serang</strong>: 44 usaha (Didominasi Warung Makan & Kedai Kelontong)</li>
                  <li><strong>Sekeloa</strong>: 40 usaha (Didominasi Jasa Katering & Makanan Ringan)</li>
                </ul><br>
@@ -122,8 +122,8 @@ function initRAGSimulator() {
         },
         q2: {
             question: "Bagaimana hubungan rantai pasok antara Pengrajin Kayu dan Toko Mebel?",
-            answer: `<strong>Hasil Analisis Knowledge Graph:</strong><br>
-               Berdasarkan relasi semantik entitas bisnis di database:<br><br>
+            answer: `
+               Berdasarkan relasi antar entitas bisnis di wilayah tersebut:<br><br>
                <ul>
                  <li><strong>Pengrajin Kayu (Hulu)</strong> mensuplai bahan baku mentah (Kayu Jati/Mahoni bersertifikat) ke <strong>3 Distributor Utama</strong>.</li>
                  <li><strong>Distributor Utama</strong> mendistribusikan kayu olahan setengah jadi ke <strong>8 Toko Mebel Lokal</strong> di area industri kreatif.</li>
@@ -137,13 +137,13 @@ function initRAGSimulator() {
             }
         },
         q3: {
-            question: "Di mana potensi celah bisnis retail yang belum tergarap di Kelurahan Dago?",
-            answer: `<strong>Hasil Analisis Celah Rantai Nilai (AI & Spatial):</strong><br>
-               Analisis menunjukkan ketidakseimbangan pasokan dan permintaan di beberapa sektor retail Kelurahan Dago:<br><br>
+            question: "Di mana potensi celah bisnis retail yang belum tergarap di Kelurahan Belimbing?",
+            answer: `
+               Analisis menunjukkan ketidakseimbangan pasokan dan permintaan di beberapa sektor retail Kelurahan Belimbing:<br><br>
                <ul>
                  <li><strong>Kepadatan Kafe Kopi</strong>: Sangat Tinggi (Indeks Persaingan: 0.89). *Tidak direkomendasikan untuk wirausahawan baru*.</li>
-                 <li><strong>Celah Retail Terbuka</strong>: Minimarket Bahan Organik & Sayur Segar Harian. Indeks kebutuhan warga di area Dago atas mencapai <strong>0.78</strong>, namun penyedia lokal terdekat berjarak >2.5 km.</li>
-                 <li><strong>Rekomendasi Lokasi</strong>: Sepanjang Jl. Dago Pojok bagian barat untuk menangkap pasar residensial padat penduduk.</li>
+                 <li><strong>Celah Retail Terbuka</strong>: Minimarket Bahan Organik & Sayur Segar Harian. Indeks kebutuhan warga di area Belimbing atas mencapai <strong>0.78</strong>, namun penyedia lokal terdekat berjarak >2.5 km.</li>
+                 <li><strong>Rekomendasi Lokasi</strong>: Sepanjang Jl. Belimbing Pojok bagian barat untuk menangkap pasar residensial padat penduduk.</li>
                </ul>`,
             ragas: {
                 faithfulness: 0.95,
@@ -260,9 +260,9 @@ function initBuilderSimulator() {
 
     const profileData = {
         kopi: {
-            title: "Kopi Cantik Dago",
+            title: "Kopi Cantik Belimbing",
             sector: "Kuliner - Kafe Kopi",
-            desc: "Menyajikan kopi arabika pilihan dari pegunungan Jawa Barat dengan proses seduh manual yang otentik dan nyaman untuk bersantai.",
+            desc: "Kopi arabika pilihan dengan cita rasa autentik, tersedia dalam seduhan manual dan kemasan bubuk untuk dinikmati kapan saja.",
             url: "2211080.id/kopidicantik"
         },
         mebel: {
@@ -358,21 +358,21 @@ function initBufferingSimulator() {
             size: '60px',
             radiusText: '500 meter',
             countText: '1 Usaha',
-            listText: 'Kopi Cantik Dago',
+            listText: 'Kopi Cantik Belimbing',
             visibleCount: 1
         },
         '1000': {
             size: '110px',
             radiusText: '1000 meter',
             countText: '3 Usaha',
-            listText: 'Kopi Cantik Dago, Kopi Senja, Mebel Jati Abadi',
+            listText: 'Kopi Cantik Belimbing, Kopi Senja, Mebel Jati Abadi',
             visibleCount: 3
         },
         '1500': {
             size: '160px',
             radiusText: '1500 meter',
             countText: '4 Usaha',
-            listText: 'Kopi Cantik Dago, Kopi Senja, Mebel Jati Abadi, Kerajinan Bambu',
+            listText: 'Kopi Cantik Belimbing, Kopi Senja, Mebel Jati Abadi, Kerajinan Bambu',
             visibleCount: 4
         }
     };

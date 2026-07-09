@@ -47,13 +47,13 @@ client_embed = OpenAI(api_key=OPENAI_API_KEY_EMBED, base_url=BASE_URL)
 # ===============================
 # NEO4J GRAPH DATABASE
 # ===============================
-# NEO4J_URI      = "neo4j+s://0eee7da8.databases.neo4j.io"
-# NEO4J_USER     = "0eee7da8"
-# NEO4J_PASSWORD = "czrfB-U4GmdFZDqStdC7ZkdniTG74Vyf7w3QmW9p0N4"
+NEO4J_URI      = "neo4j+s://0eee7da8.databases.neo4j.io"
+NEO4J_USER     = "0eee7da8"
+NEO4J_PASSWORD = "czrfB-U4GmdFZDqStdC7ZkdniTG74Vyf7w3QmW9p0N4"
 
-NEO4J_URI      = "bolt://127.0.0.1:7687"
-NEO4J_USER     = "neo4j"
-NEO4J_PASSWORD = "26022002"
+# NEO4J_URI      = "bolt://127.0.0.1:7687"
+# NEO4J_USER     = "neo4j"
+# NEO4J_PASSWORD = "26022002"
 
 driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 

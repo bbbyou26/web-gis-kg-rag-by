@@ -1026,8 +1026,21 @@ header.scrolled {
 }
 
 /* CTA BANNER (SOLID NAVY BACKGROUND) */
-.cta-banner {
+/* .cta-banner {
     background-color: var(--navy-dark);
+    color: var(--bg-white);
+    padding: 72px 0;
+    text-align: center;
+} */
+/* CTA BANNER (IMAGE BACKGROUND 60% TRANSPARENT) */
+.cta-banner {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('/static/image/cta-banner.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
     color: var(--bg-white);
     padding: 72px 0;
     text-align: center;
