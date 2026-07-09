@@ -1,0 +1,176 @@
+/* ORIGINAL DESIGN REVISION - USIAHA (tgg6.html) */
+.edit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 10000;
+  display: none;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: inherit;
+}
+
+.edit-overlay.active {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  /* CENTERED */
+}
+
+.edit-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 2px solid #e0e0e0;
+  padding: 16px;
+  width: 360px;
+  max-height: 85vh;
+  /* MAX HEIGHT */
+  overflow-y: auto;
+  /* SCROLLABLE */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  font-family: system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Minimalist Scrollbar */
+.edit-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.edit-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.edit-card::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 10px;
+}
+
+.edit-card::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  position: sticky;
+  /* Keep title visible while scrolling */
+  top: 0;
+  background: white;
+  z-index: 10;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f2f7f9;
+}
+
+.edit-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2c5d6b;
+}
+
+.close-edit {
+  font-size: 20px;
+  cursor: pointer;
+  color: #2c5d6b;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2c5d6b;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2c5d6b;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #f2f7f9;
+}
+
+.input,
+textarea,
+select {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  padding: 9px 12px;
+  font-size: 13px;
+  background: #f2f7f9;
+  outline: none;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+.input:focus,
+textarea:focus,
+select:focus {
+  border-color: #38a0c4;
+  box-shadow: 0 0 0 3px rgba(56, 160, 196, 0.1);
+}
+
+.upload-box {
+  border: 2px dashed #8d98e0;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  background: #f2f7f9;
+  font-size: 13px;
+}
+
+.preview {
+  margin-top: 8px;
+  display: none;
+}
+
+.preview img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #f2f7f9;
+}
+
+.btn-save {
+  border: none;
+  background: #38a0c4;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 18px;
+  font-size: 12px;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.btn-save:hover {
+  background: #2a8cae;
+}
+
+.hidden {
+  display: none !important;
+}

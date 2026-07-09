@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Layout & Komponen Utama -->
+  <link rel="stylesheet" href="/static/css/layout.css" />
+  <link rel="stylesheet" href="/static/css/actor_popup.css" />
+  <link rel="stylesheet" href="/static/css/actor_panel.css" />
+  <!-- Form Edit Aktor -->
+  <link rel="stylesheet" href="/static/css/edit_business.css" />
+  <link rel="stylesheet" href="/static/css/edit_area.css" />
+  <!-- Fitur Chatbot Spasial -->
+  <link rel="stylesheet" href="/static/css/spatial_chat.css" />
+  <!-- Profil Pengguna -->
+  <link rel="stylesheet" href="/static/css/user_profile.css" />
+
+  <link rel="icon" type="image/x-icon" href="/static/image/icon.ico">
+</head>
+
+<body
+  class="{% if not session.get('user', '').endswith(':admin@2211080.com') and not session.get('user', '').endswith(':admin') %}non-admin{% endif %}">
+  <script>
+    window.currentUser = "{{ session.get('user', '') }}";
+    window.isAdmin = window.currentUser.includes(':admin');
+  </script>
+  <div class="app">
+    <div id="map">
+      <div class="custom-zoom">
+        <div class="zoom-btn" id="zoomIn">+</div>
+        <div class="zoom-btn" id="zoomOut">−</div>
+      </div>
+      <!-- DRAWING CONTROLS -->
+      <div class="controls-left"> <button class="btn-circle active" id="draw-mode-btn" title="Mode Gambar">
+          <svg id="edit-tool-svg-id" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="28" height="28"
+            version="1.1"
+            style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; width: 28px; height: 28px;"
+            viewBox="0 0 1200 1200" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+              <style type="text/css">
+                <![CDATA[
+                #edit-tool-svg-id .et-fil1 {
+                  fill: #189DC9
+                }
+
+                #edit-tool-svg-id .et-fil2 {
+                  fill: #206F8A
+                }
+
+                #edit-tool-svg-id .et-fil0 {
+                  fill: #2E7D99
+                }
+
+                #edit-tool-svg-id .et-fil6 {
+                  fill: #B8B6B6
+                }
+
+                #edit-tool-svg-id .et-fil3 {
+                  fill: #C9C7C7
+                }
+
+                #edit-tool-svg-id .et-fil5 {
+                  fill: #D6D3D3
+                }
+
+                #edit-tool-svg-id .et-fil4 {
+                  fill: #DEDEDE
+                }
+                ]]>
+              </style>
+            </defs>
+            <g id="Layer_x0020_1">
+              <metadata id="CorelCorpID_0Corel-Layer" />
+              <g id="_2643366352080">
+                <path class="et-fil0" d="M746 243c-12,-6 -26,-1 -32,11l-25 53 42 21 26 -54c5,-12 0,-26 -11,-31z" />
+                <polygon class="et-fil1" points="657,287 455,684 566,740 768,343 " />
+                <polygon class="et-fil2" points="664,291 462,688 496,705 691,305 " />
+                <polygon class="et-fil3" points="689,303 675,333 753,372 767,343 " />
+                <polygon class="et-fil4" points="657,285 642,315 676,332 690,302 " />
+                <path class="et-fil3" d="M555 335l-179 340c-5,10 -1,23 9,28l9 5 173 -331c-10,-11 -14,-27 -12,-42z" />
+                <path class="et-fil0"
+                  d="M557 321l0 0c14,-25 45,-35 70,-22l21 12 -48 90 -21 -11c-25,-13 -35,-44 -22,-69z" />
+                <polygon class="et-fil5" points="455,680 388,855 426,871 464,887 566,737 " />
+                <polygon class="et-fil6" points="464,685 398,859 417,867 497,702 " />
+                <polygon class="et-fil0" points="390,853 396,890 403,927 434,906 466,885 428,869 " />
+              </g>
+            </g>
+          </svg>
+        </button>
+        <button class="btn-circle" id="pan-mode-btn" title="Mode Geser (Pan)">
+          <svg id="hand-tool-svg-id" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="28" height="28"
+            version="1.1"
+            style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; width: 28px; height: 28px;"
+            viewBox="0 0 1200 1200" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+              <style type="text/css">
+                <![CDATA[
+                #hand-tool-svg-id .ht-str0 {
+                  stroke: #A69080;
+                  stroke-width: 20
+                }
+
+                #hand-tool-svg-id .ht-str1 {
+                  stroke: #A69080;
+                  stroke-width: 20;
+                  stroke-linecap: round
+                }
+
+                #hand-tool-svg-id .ht-fil1 {
+                  fill: none
+                }
+
+                #hand-tool-svg-id .ht-fil2 {
+                  fill: #DEC0AB
+                }
+
+                #hand-tool-svg-id .ht-fil3 {
+                  fill: #EBCAB3
+                }
+
+                #hand-tool-svg-id .ht-fil0 {
+                  fill: #F8D3B9
+                }
+                ]]>
+              </style>
+            </defs>
+            <g id="Layer_x0020_1">
+              <metadata id="CorelCorpID_0Corel-Layer" />
+              <g id="_2643362119936">
+                <path class="ht-fil0 ht-str0"
+                  d="M354 773c28,57 45,96 60,120 14,24 26,33 43,45 1,1 3,2 4,3 17,11 39,23 67,35 31,12 69,23 102,26 33,3 61,-2 86,-10 25,-9 46,-21 68,-38 22,-16 45,-37 67,-70 22,-32 44,-76 52,-113 8,-36 2,-65 -11,-101 -13,-36 -33,-79 -52,-115 -19,-37 -37,-68 -51,-96 -13,-28 -22,-55 -36,-68 -13,-14 -30,-15 -45,-11 -14,4 -26,13 -32,24 -6,9 -7,20 -3,37 -6,-8 -13,-15 -19,-25 -6,-10 -12,-22 -26,-51 -13,-28 -35,-73 -50,-102 -15,-30 -23,-44 -34,-55 -11,-11 -24,-19 -38,-20 -14,-2 -27,2 -34,7 -8,6 -8,11 -10,20 -3,9 -7,20 -12,19 -6,-1 -13,-15 -22,-26 -8,-11 -17,-20 -30,-23 -12,-3 -28,0 -41,6 -13,7 -23,19 -27,29 -3,10 0,19 4,29 3,11 7,22 4,25 -2,3 -11,-2 -19,-3 -8,-1 -14,1 -24,4 -10,3 -24,8 -31,17 -8,9 -9,23 -6,38 2,15 6,30 14,46 8,16 18,32 15,36 -3,5 -20,-2 -34,-3 -14,0 -25,5 -33,13 -5,5 -8,11 -11,17 -2,5 -4,10 -4,16 -2,11 0,21 9,39 8,18 22,43 49,94 26,51 64,128 91,185z" />
+                <path class="ht-fil1 ht-str1" d="M292 422c51,95 102,190 128,237 25,48 25,48 24,48" />
+                <path class="ht-fil1 ht-str1" d="M343 284c58,115 116,230 174,345" />
+                <path class="ht-fil1 ht-str1" d="M456 247c55,110 111,220 166,330" />
+                <path class="ht-fil2"
+                  d="M637 819c4,51 38,110 71,168 25,-8 47,-20 69,-37 22,-16 45,-37 67,-70 22,-32 44,-76 52,-113 8,-36 2,-65 -11,-101 -13,-36 -33,-79 -52,-116 -9,-17 -18,-33 -26,-47 -18,2 -36,5 -52,16 -16,10 -30,28 -33,51 -3,23 6,52 1,70 -5,19 -24,28 -45,55 -21,27 -46,72 -41,124z" />
+                <path class="ht-fil1 ht-str1"
+                  d="M677 456c25,48 49,96 55,122 6,26 -8,30 -25,44 -17,13 -38,36 -49,66 -11,30 -11,68 -5,94 6,26 18,42 31,57" />
+                <path class="ht-fil3"
+                  d="M301 657c13,26 27,50 38,66 27,40 38,35 45,22 7,-12 10,-32 -1,-67 -11,-34 -37,-84 -58,-122 -20,-38 -34,-64 -53,-75 -18,-11 -40,-5 -48,2 -6,5 -5,11 3,29 4,9 10,21 18,36 14,29 35,71 56,109z" />
+                <path class="ht-fil3"
+                  d="M355 531c15,29 30,57 42,75 31,47 42,41 48,28 7,-14 9,-36 -5,-75 -13,-39 -43,-96 -66,-139 -23,-44 -39,-74 -59,-87 -19,-13 -41,-9 -50,-1 -5,6 -4,12 5,33 5,10 12,23 21,41 16,33 40,81 64,125z" />
+                <path class="ht-fil3"
+                  d="M434 454c16,30 31,57 43,76 30,47 41,41 48,28 6,-14 9,-36 -5,-75 -14,-40 -44,-97 -67,-140 -23,-44 -39,-74 -59,-87 -19,-13 -42,-9 -50,-1 -5,5 -4,12 5,33 5,10 12,23 21,41 16,33 40,82 64,125z" />
+                <path class="ht-fil3"
+                  d="M553 431c15,29 30,55 42,74 30,46 41,40 48,27 6,-14 9,-35 -5,-74 -13,-39 -43,-95 -65,-138 -23,-43 -39,-73 -58,-85 -20,-13 -42,-8 -50,-1 -6,6 -5,12 5,33 4,10 11,23 19,40 17,33 41,81 64,124z" />
+              </g>
+            </g>
+          </svg>
+        </button>
+        <button class="btn-circle" id="undo-btn" title="Undo" disabled>↩</button>
+        <button class="btn-circle" id="redo-btn" title="Redo" disabled>↪</button>
+        <button class="btn-circle btn-cancel" id="cancel-btn" title="Cancel Draw" style="display: none">✕</button>
+      </div>
+    </div>
+    <div class="map-toggle" id="toggleMap">
+      <svg id="tile-svg-id" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20" height="20" version="1.1"
+        style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; width: 20px; height: 20px;"
+        viewBox="0 0 1200 1200" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs>
+          <style type="text/css">
+            <![CDATA[
+            #tile-svg-id .tile-str0 {
+              stroke: #206F8A;
+              stroke-width: 25
+            }
+
+            #tile-svg-id .tile-fil0 {
+              fill: none
+            }
+
+            #tile-svg-id .tile-fil1 {
+              fill: #33CC66
+            }
+
+            #tile-svg-id .tile-fil2 {
+              fill: #33CC66
+            }
+
+            #tile-svg-id .tile-fil3 {
+              fill: #38A0C4
+            }
+            ]]>
+          </style>
+        </defs>
+        <g id="Layer_x0020_1">
+          <metadata id="CorelCorpID_0Corel-Layer" />
+          <g id="_2643479875792">
+            <circle class="tile-fil0 tile-str0" cx="604" cy="607" r="394" />
+            <path class="tile-fil1"
+              d="M502 797c2,18 -15,44 -14,62 1,18 19,28 25,48 6,21 0,52 3,69 4,17 16,19 33,13 16,-7 35,-22 46,-42 10,-20 12,-43 31,-63 20,-21 57,-37 82,-63 24,-26 35,-61 21,-77 -15,-16 -55,-13 -73,-22 -17,-10 -12,-32 -17,-50 -4,-17 -20,-30 -54,-33 -34,-2 -87,5 -111,27 -24,22 -20,60 -8,83 13,23 34,31 36,48z" />
+            <path class="tile-fil2"
+              d="M300 359c4,31 8,62 14,86 6,24 15,41 24,62 10,21 21,46 37,60 15,15 34,19 52,29 17,10 32,27 47,43 -12,-27 -25,-55 -29,-76 -5,-22 -2,-37 -12,-45 -9,-8 -32,-10 -43,-10 -11,-1 -11,-1 -9,-14 2,-12 6,-37 20,-44 14,-6 38,7 52,7 15,1 20,-10 32,-25 11,-16 27,-35 45,-46 17,-11 35,-14 53,-18 18,-3 36,-7 39,-13 3,-5 -10,-12 -10,-21 0,-10 13,-21 25,-29 12,-8 23,-14 16,-17 -7,-4 -32,-5 -39,-17 -7,-12 4,-35 16,-58 -8,0 -16,0 -23,0 -124,0 -235,57 -307,146z" />
+            <path class="tile-fil1"
+              d="M223 669c17,108 78,201 163,261 1,-28 1,-55 -11,-77 -13,-21 -40,-35 -56,-63 -16,-28 -23,-69 -37,-91 -14,-23 -36,-26 -59,-30z" />
+            <path class="tile-fil1"
+              d="M853 667c-7,14 4,40 2,57 -2,16 -17,23 -16,30 0,7 17,14 24,25 7,11 4,27 -15,39 -18,13 -53,23 -68,45 -14,22 -8,56 -2,90 126,-65 212,-197 212,-349 0,-104 -41,-199 -107,-269 4,33 7,65 1,95 -6,30 -21,56 -26,80 -5,25 1,47 11,70 9,23 23,46 18,59 -5,12 -28,14 -34,28z" />
+            <path class="tile-fil3"
+              d="M445 563c4,21 17,49 29,76 -15,-16 -30,-33 -47,-43 -18,-10 -37,-14 -52,-29 -16,-14 -27,-39 -37,-60 -9,-21 -18,-38 -24,-62 -6,-24 -10,-55 -14,-86 -55,68 -87,154 -87,248 0,21 1,41 4,61 23,3 45,7 59,29 14,23 20,64 37,92 16,27 43,42 55,63 13,21 12,49 12,77 64,45 142,72 227,72 65,0 128,-16 182,-45 -6,-34 -12,-69 2,-91 15,-22 50,-32 68,-44 19,-13 22,-28 15,-39 -7,-11 -24,-18 -24,-25 -1,-7 14,-14 16,-31 2,-16 -9,-43 -3,-57 7,-14 30,-15 35,-27 5,-13 -9,-37 -19,-60 -9,-22 -15,-45 -10,-69 5,-24 20,-51 26,-80 6,-30 3,-63 -1,-95 -67,-72 -160,-119 -264,-125 -12,23 -23,46 -16,58 7,12 32,13 39,17 7,3 -4,9 -16,17 -12,8 -25,19 -25,29 0,9 13,16 10,21 -3,6 -21,10 -39,13 -18,4 -36,7 -53,18 -18,11 -34,30 -45,46 -12,15 -17,26 -32,25 -14,0 -38,-13 -52,-7 -14,7 -18,32 -20,44 -2,13 -2,13 9,14 11,0 34,2 43,10 10,8 7,23 12,45zm140 74c34,3 50,16 55,33 4,17 -1,40 16,49 18,10 58,7 73,23 14,16 3,51 -21,77 -25,26 -62,42 -82,62 -19,21 -21,44 -31,64 -10,20 -30,35 -46,42 -16,6 -29,4 -33,-13 -3,-17 3,-48 -3,-69 -6,-20 -24,-30 -25,-48 -1,-18 16,-44 14,-62 -2,-17 -23,-26 -36,-48 -12,-23 -16,-61 8,-83 24,-22 77,-29 111,-27z" />
+          </g>
+        </g>
+      </svg>
+      Satelit
+    </div>
+    <div class="topbar-container">
+      <div class="topbar-search">
+        <textarea id="searching" placeholder="Cari Lokasi/Usaha"></textarea>
+        <button id="searchBtn" class="btn-search">Search</button>
+      </div>
+      <div class="open-profile" id="profile">
+        <img src="data:image/*;base64,{{ user.foto }}" alt="Profile" />
+      </div>
+    </div>
+
+    <!-- PROFILE WRAPPER -->
+    <div class="profile-wrapper" id="profileWrapper">
+      <!-- TOP PROFILE -->
+      <div class="top-profile">
+        <div id="imgProfile">
+          <img src="data:image/*;base64,{{ user.foto }}" alt="Profile" />
+        </div>
+        <div class="name-container">
+          <label class="nama">{{ user.name }}</label>
+          <label class="status">User</label>
+        </div>
+      </div>
+
+      <!-- MENU PROFIL -->
+      <div class="menu-profil" id="Profil">Profil Saya</div>
+      {% if session.get('user', '').endswith(':admin') or session.get('user', '').endswith(':admin@2211080.com') %}
+      <div class="menu-profil" id="AksesIzin" onclick="window.togglePermissionOverlay()">Akses Izin</div>
+      {% else %}
+      <div class="menu-profil"
+        style="display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: default;"
+        onclick="event.stopPropagation()">
+        <span>Izinkan Akses</span>
+        <input type="checkbox" id="toggleIzinkanAkses" style="cursor: pointer; width: 18px; height: 18px;" />
+      </div>
+      {% endif %}
+      <div class="menu-profil" id="Keluar">Keluar</div>
+    </div>
+
+    <div class="cluster-wrapper">
+      <div class="cluster-main" id="clusterMain">
+        <span id="clusterText">Kabupaten / Kota</span>
+      </div>
+      <div class="cluster-tool" id="clusterTool">☰</div>
+      <div class="cluster-options" id="clusterOptions">
+        <div class="cluster-option">RT / RW</div>
+        <div class="cluster-option">Kelurahan</div>
+        <div class="cluster-option">Kecamatan</div>
+        <div class="cluster-option">Kabupaten / Kota</div>
+      </div>
+    </div>
+    <!-- ACTOR MAIN (YANG BESAR) -->
+
+    <!-- USAHA (DEFAULT) -->
+    <!-- ICON MINI SWITCH -->
+    <div class="actor-switch">
+      <img src="/static/image/actor/ico-show-usaha.svg" data-target="aktorUsaha">
+      <img src="/static/image/actor/ico-show-lokasi.svg" data-target="aktorLokasi">
+    </div>
+
+    <div class="actor-main active" id="aktorUsaha">
+      <span>
+        <img src="/static/image/actor/usaha.svg" />
+        <br />Aktor<br />Usaha
+      </span>
+    </div>
+
+
+
+    <!-- LOKASI -->
+    <div class="actor-main hidden" id="aktorLokasi">
+      <span>
+        <img src="/static/image/actor/draw-location.svg" />
+        <br />Draw<br />Lokasi
+      </span>
+    </div>
+
+
+
+    <!-- LOCATION OVERLAY -->
+    <div class="location-overlay hidden" id="locationOverlay">
+      <div class="location-modal">
+        <div class="location-icon">
+          <img src="/static/image/icon/ai-pin.svg" class="location-svg" alt="Pin" />
+        </div>
+        <div class="location-title">Apakah Anda ingin mengubah lokasi?</div>
+        <div class="location-desc">
+          Perubahan lokasi akan mempengaruhi data yang ditampilkan.
+        </div>
+        <div class="location-actions">
+          <button class="btn-location no" onclick="closeLocation()">Tidak</button>
+          <button class="btn-location yes" onclick="confirmLocation()">Ya</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT OVERLAY USAHA -->
+    <div class="edit-overlay" id="editUsahaOverlay">
+      <div class="edit-card">
+        <div class="edit-header">
+          <div class="edit-title">Usaha</div>
+          <div class="close-edit" onclick="closeEditOverlay(this)">✕</div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Nama</label>
+          <textarea placeholder="Masukkan nama usaha"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Foto Visual</label>
+          <div class="upload-box" onclick="document.getElementById('fileUsaha').click()">Upload Foto</div>
+          <input type="file" id="fileUsaha" hidden accept="image/*" onchange="previewImageEdit(event, 'previewUsaha')">
+          <div class="preview" id="previewUsaha">
+            <img src="" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Bidang</label>
+          <textarea placeholder="Masukkan bidang usaha/pekerjaan"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Notes</label>
+          <textarea placeholder="Masukkan catatan tambahan..."></textarea>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-save">Simpan</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- EDIT OVERLAY LOKASI -->
+    <div class="edit-overlay" id="editLokasiOverlay">
+      <div class="edit-card">
+        <div class="edit-header">
+          <div class="edit-title">Lokasi</div>
+          <div class="close-edit" onclick="closeEditOverlay(this)">✕</div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Nama</label>
+          <textarea placeholder="Masukkan nama lokasi"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Foto Visual</label>
+          <div class="upload-box" onclick="document.getElementById('fileLokasi').click()">Klik untuk upload foto</div>
+          <input type="file" id="fileLokasi" hidden accept="image/*"
+            onchange="previewImageEdit(event, 'previewLokasi')">
+          <div class="preview" id="previewLokasi">
+            <img src="" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Warna</label>
+          <input type="color" class="input color-input" />
+        </div>
+
+        <!-- COORDINATE CONTAINER FOR POLYGON -->
+        <div id="polygonCoordsContainer" class="form-group hidden">
+          <label class="label">Titik Koordinat (Lat, Lon)</label>
+          <div class="coords-list-wrapper">
+            <div class="coords-list" id="coordsList">
+              <!-- Dynamic content -->
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Marker Type</label>
+          <select>
+            <option>Pemukiman</option>
+            <option>Lahan</option>
+            <option>Perairan</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Populasi</label>
+          <input type="text" class="input input-populasi" placeholder="Masukkan angka" />
+        </div>
+
+        <div class="form-group">
+          <label class="label">Notes</label>
+          <textarea placeholder="Catatan tambahan"></textarea>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-save">Simpan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTO OVERLAY MODAL -->
+    <div id="photoOverlay" class="photo-overlay hidden" onclick="this.classList.add('hidden')">
+      <div class="photo-modal-content">
+        <img id="fullPhoto" src="" onclick="event.stopPropagation()" />
+      </div>
+    </div>
+
+    <!-- DELETE CONFIRM OVERLAY -->
+    <div class="delete-confirm-overlay hidden" id="deleteConfirmOverlay">
+      <div class="delete-confirm-modal">
+        <div class="delete-confirm-icon">
+          <img src="/static/image/icon/delete.svg" class="delete-confirm-svg" alt="Delete" />
+        </div>
+        <div class="delete-confirm-title">Hapus Aktor?</div>
+        <div class="delete-confirm-desc">
+          Aktor ini akan dihapus dari peta secara permanen dan tidak bisa dikembalikan.
+        </div>
+        <div class="delete-confirm-actions">
+          <button class="btn-confirm no" onclick="cancelDeleteMarker()">Batal</button>
+          <button class="btn-confirm yes" onclick="confirmDeleteMarker()">Hapus</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="chatbot">
+      <span>
+        <img src="/static/image/actor/chatbot.svg" alt="Chatbot" />
+      </span>
+    </div>
+
+    <!-- Chatbot Overlay UI -->
+    <div id="chatbotOverlay" class="chatbot-overlay hidden">
+      <div class="chatbot-card">
+        <div class="chatbot-header" style="align-items: center; border-bottom: none; padding-bottom: 12px;">
+          <div class="header-left" style="display: flex; align-items: center; gap: 10px;">
+            <img src="/static/image/actor/chatbot.svg" alt="AI Agent" class="bot-icon" />
+            <div class="bot-info">
+              <span class="bot-name">Chatbot AI</span>
+              <span class="bot-status">Online • Siap membantu</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button id="mainJcToggle" class="btn-job-creation-toggle" onclick="window.toggleJobCreationMenu()">Job
+              Creation</button>
+            <button class="close-chatbot" onclick="window.toggleChatbot()">✕</button>
+          </div>
+        </div>
+
+        <!-- Submenu Chips (Hidden by Default) -->
+        <div id="jobCreationSubMenu" class="jc-submenu-container hidden">
+          <div class="jc-chip" id="chipSumberDaya"
+            style="display: flex; align-items: center; padding: 0; overflow: hidden;">
+            <div onclick="window.setChatMode('sumber-daya', document.getElementById('chipSumberDaya'))"
+              style="padding: 6px 10px; cursor: pointer;">Sumber Daya</div>
+            <div style="width: 1px; height: 14px; background: currentColor; opacity: 0.3;"></div>
+            <div onclick="document.getElementById('chatImgInput').click()"
+              style="padding: 6px 10px; cursor: pointer; display: flex; align-items: center;"
+              title="Upload Gambar Produk">
+              <svg id="images-svg-id" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18" height="18"
+                version="1.1"
+                style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; width: 18px; height: 18px;"
+                viewBox="0 0 1200 1200" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                  <style type="text/css">
+                    <![CDATA[
+                    #images-svg-id .img-str2 {
+                      stroke: #38A0C4;
+                      stroke-width: 7
+                    }
+
+                    #images-svg-id .img-str1 {
+                      stroke: #206F8A;
+                      stroke-width: 25
+                    }
+
+                    #images-svg-id .img-str0 {
+                      stroke: #189DC9;
+                      stroke-width: 25;
+                      stroke-linejoin: round
+                    }
+
+                    #images-svg-id .img-fil0 {
+                      fill: none
+                    }
+
+                    #images-svg-id .img-fil1 {
+                      fill: #38A0C4
+                    }
+                    ]]>
+                  </style>
+                </defs>
+                <g id="Layer_x0020_1">
+                  <metadata id="CorelCorpID_0Corel-Layer" />
+                  <rect class="img-fil0 img-str0" x="165" y="224" width="871" height="733" rx="30" ry="30" />
+                  <circle class="img-fil0 img-str1" cx="596" cy="593" r="217" />
+                  <path class="img-fil1 img-str2"
+                    d="M507 569c3,12 10,27 16,42 -8,-9 -16,-18 -26,-24 -9,-6 -20,-8 -28,-16 -9,-8 -15,-22 -20,-33 -5,-12 -10,-21 -13,-34 -4,-13 -6,-30 -8,-47 -30,37 -49,84 -49,136 0,11 1,23 3,34 12,2 25,4 32,16 8,12 12,35 21,50 9,16 23,24 30,35 7,12 7,27 7,43 35,25 78,39 125,39 36,0 70,-9 100,-24 -3,-19 -6,-38 2,-51 7,-12 27,-17 37,-24 10,-7 12,-15 8,-21 -4,-7 -13,-10 -13,-14 -1,-4 8,-8 9,-17 1,-9 -5,-24 -2,-32 4,-7 17,-8 19,-15 3,-7 -5,-20 -10,-32 -5,-13 -8,-25 -6,-39 3,-13 11,-28 15,-44 3,-16 1,-34 -1,-52 -37,-40 -88,-66 -146,-69 -6,13 -12,25 -8,32 4,6 17,7 21,9 4,2 -2,5 -9,10 -6,4 -13,10 -13,15 0,5 7,9 5,12 -1,3 -11,6 -21,7 -10,2 -20,4 -30,10 -9,6 -18,17 -25,25 -6,9 -9,15 -17,15 -8,-1 -21,-8 -29,-4 -7,3 -9,17 -10,24 -2,7 -2,7 5,7 6,1 18,1 23,6 5,5 4,13 6,25zm78 41c19,1 27,8 30,18 3,9 -1,22 9,27 10,5 32,4 40,13 8,9 2,28 -12,42 -13,14 -34,23 -44,34 -11,11 -12,25 -18,35 -5,11 -16,20 -25,23 -9,4 -16,3 -18,-7 -2,-9 1,-26 -2,-37 -3,-12 -13,-17 -14,-27 0,-10 9,-25 8,-34 -1,-10 -13,-14 -20,-27 -6,-13 -9,-33 5,-46 13,-12 42,-16 61,-14z" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <button class="jc-chip" onclick="window.setChatMode('celah-rantai-nilai', this)">Celah Rantai Nilai</button>
+          <button class="jc-chip" onclick="window.setChatMode('analisis', this)">Analisis Teknis</button>
+          <button class="jc-chip" onclick="window.setChatMode('sinergi-kemitraan', this)">Sinergi & Kemitraan</button>
+          <button class="jc-chip" onclick="window.setChatMode('simulasi-lapangan-kerja', this)">Simulasi Lapangan
+            Kerja</button>
+        </div>
+
+        <div class="chatbot-messages" id="chatMessages">
+          <div class="message bot">
+            <div class="bubble">Halo! Saya Chatbot AI Agent. Ada yang bisa saya bantu terkait analisis wilayah atau data
+              aktor?</div>
+          </div>
+        </div>
+
+        <div class="chatbot-input-container">
+          <!-- Location Target Badge -->
+          <div id="locationTargetBadge" class="location-badge hidden">
+            <span>Lokasi telah tertarget</span>
+            <button class="remove-target" onclick="removeLocationTarget()">✕</button>
+          </div>
+
+          <!-- Image Preview Container -->
+          <div id="chatImagePreview" class="chat-image-preview hidden"
+            style="position: relative; width: fit-content; margin-bottom: -4px;">
+            <img id="chatPreviewImg" src=""
+              style="height: 60px; border-radius: 8px; border: 1px solid #ccc; object-fit: cover;" />
+            <button onclick="window.removeChatImage()"
+              style="position: absolute; top: -6px; right: -6px; background: #ff4757; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; cursor: pointer;">✕</button>
+          </div>
+
+          <div class="input-wrapper">
+            <button id="btnAiPin" class="ai-pin-btn" title="Targetkan Lokasi">
+              <img src="/static/image/icon/ai-pin.svg" alt="Pin" />
+            </button>
+
+            <input type="file" id="chatImgInput" accept="image/*" style="display: none;"
+              onchange="window.handleChatImageUpload(event)" />
+
+            <textarea id="chatInput" placeholder="Tanyakan sesuatu..." rows="1"></textarea>
+            <button class="send-chat">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERMISSION OVERLAY UI -->
+    <div id="permissionOverlay" class="chatbot-overlay hidden"
+      onclick="if(event.target === this) window.togglePermissionOverlay()">
+      <div class="chatbot-card">
+        <div class="chatbot-header" style="align-items: center; border-bottom: none; padding-bottom: 12px;">
+          <div class="header-left" style="display: flex; align-items: center; gap: 10px;">
+            <img src="/static/image/icon/access.svg" alt="Akses Izin" class="bot-icon"
+              style="background: #bddce7; padding: 6px;" />
+            <div class="bot-info">
+              <span class="bot-name">Akses Izin</span>
+              <span class="bot-status" style="color: #8d98e0;">Daftar Permintaan</span>
+            </div>
+          </div>
+          <button class="close-chatbot" onclick="window.togglePermissionOverlay()">✕</button>
+        </div>
+
+        <div class="chatbot-messages" id="permissionRequestsList"
+          style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #fafcfd; height: 100%;">
+          <!-- Requests list will be loaded here dynamically -->
+        </div>
+      </div>
+    </div>
+
+
+    <!-- PROFILE EDIT OVERLAY -->
+    <div id="profileEditOverlay" class="profile-edit-overlay hidden">
+      <div class="profile-edit-card">
+        <div class="close-profile-edit" onclick="document.getElementById('profileEditOverlay').classList.add('hidden')">
+          ✕
+        </div>
+        <div class="profile-edit-title">Edit Profil Saya</div>
+
+        <div class="edit-profile-photo" onclick="document.getElementById('profileFileInput').click()">
+          <img id="profilePreviewImg" src="data:image/*;base64,{{ user.foto }}" alt="Profile" />
+          <div class="photo-overlay-edit">Ganti Foto</div>
+        </div>
+        <input type="file" id="profileFileInput" hidden accept="image/*" onchange="previewProfilePhoto(event)">
+
+        <input type="text" id="profileNameInput" class="edit-profile-input" value="{{ user.name }}"
+          placeholder="Nama Anda">
+
+        <button class="btn-profile-save" id="saveProfileBtn">Simpan Perubahan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Markdown Library -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Map & Aktor -->
+  <script src="/static/js/map.js"></script>
+  <script src="/static/js/actor_popup.js?v=1.2"></script>
+  <script src="/static/js/draw_area.js?v=1.2"></script>
+  <script src="/static/js/spatial_chat.js"></script>
+  <script>
+    // Ganti Map dengan array JSON agar mudah simpan/load
+    window.actorData = []; // setiap item: { actorId, markerId, type, iconUrl, nama, sektor, valueChain, survival, images, dll }
+
+
+    const switchIcons = document.querySelectorAll(".actor-switch img");
+    const actors = document.querySelectorAll(".actor-main");
+
+    switchIcons.forEach(icon => {
+      icon.addEventListener("click", () => {
+        const targetId = icon.getAttribute("data-target");
+
+        // sembunyikan semua actor
+        actors.forEach(actor => {
+          actor.classList.add("hidden");
+        });
+
+        // tampilkan target
+        document.getElementById(targetId).classList.remove("hidden");
+
+        // reset active icon
+        switchIcons.forEach(i => i.classList.remove("active"));
+
+        // aktifkan icon yang diklik
+        icon.classList.add("active");
+      });
+    });
+  </script>
+  <script src="/static/js/user_profile.js?v=1.2"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1229 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landing Page - {{ name }}</title>
+  <!-- Main layout and components stylesheet -->
+  <link rel="stylesheet" href="/static/css/layout.css" />
+  <!-- Dedicated landing page stylesheet -->
+  <link rel="stylesheet" href="/static/css/landing_page_builder.css" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/static/image/icon.ico" />
+  <style>
+    /* Spinner for loading state */
+    .loader-spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #38a0c4;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .modal-overlay {
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .modal-overlay.hidden {
+      display: none !important;
+    }
+
+    .btn-toolbar-tool {
+      transition: all 0.2s ease;
+    }
+
+    .btn-toolbar-tool:hover {
+      filter: brightness(0.9);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- App Wrapper (Matches main app sizing) -->
+  <div class="app">
+    <!-- Header -->
+    <header class="builder-header">
+      <div class="header-left">
+        <a href="/map.html" class="btn-back" title="Kembali ke Peta">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <h1 class="app-title">{{ name }}</h1>
+      </div>
+      <div class="header-right">
+        <!-- Toggle Layers System Panel -->
+        <button id="btnToggleLayers" class="btn-icon hidden" onclick="toggleLayersPanel()"
+          title="Tampilkan Sistem Layer">
+          <svg id="layer-svg-id" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="28" height="28"
+            version="1.1"
+            style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; width: 28px; height: 28px;"
+            viewBox="0 0 1200 1200" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+              <style type="text/css">
+                <![CDATA[
+                #layer-svg-id .ly-str1 {
+                  stroke: #256D85;
+                  stroke-width: 20;
+                  stroke-linejoin: round
+                }
+
+                #layer-svg-id .ly-str2 {
+                  stroke: #33CC66;
+                  stroke-width: 20;
+                  stroke-linejoin: round
+                }
+
+                #layer-svg-id .ly-str0 {
+                  stroke: #A32F2F;
+                  stroke-width: 20;
+                  stroke-linejoin: round
+                }
+
+                #layer-svg-id .ly-fil1 {
+                  fill: none
+                }
+
+                #layer-svg-id .ly-fil0 {
+                  fill: #85C68D
+                }
+
+                #layer-svg-id .ly-fil3 {
+                  fill: #0D93BF
+                }
+
+                #layer-svg-id .ly-fil2 {
+                  fill: #189DC9
+                }
+                ]]>
+              </style>
+            </defs>
+            <g id="Layer_x0020_1">
+              <metadata id="CorelCorpID_0Corel-Layer" />
+              <g id="_2643479854992">
+                <path class="ly-fil0"
+                  d="M634 889c32,-37 50,-70 55,-99 0,-2 0,-3 1,-4 8,-62 -49,-104 -168,-126l-265 115 120 53 145 63 63 28 54 -24 148 -65 125 -54 -2 -1 -120 52 -5 2 -143 63 -5 3 -13 5 7 -8 3 -3z" />
+                <polygon class="ly-fil1 ly-str0" points="911,530 573,391 256,530 584,673 " />
+                <polygon class="ly-fil1 ly-str1" points="911,656 573,517 256,656 584,799 " />
+                <polygon class="ly-fil1 ly-str2" points="918,780 580,641 263,780 591,923 " />
+                <polygon class="ly-fil2" points="911,424 573,285 256,424 584,568 " />
+                <path class="ly-fil3"
+                  d="M790 476l124 -55 -338 -139 -58 26c122,22 179,64 171,126 -4,30 -22,65 -56,104 -3,3 -6,7 -9,11l17 -8 149 -65z" />
+              </g>
+            </g>
+          </svg>
+        </button>
+
+        <!-- Palette Header Container (Inline) -->
+        <div id="paletteHeaderContainer" class="hidden"
+          style="display: flex; align-items: center; gap: 6px; background: #f0f7f9; border: 1px solid #38a0c4; border-radius: 20px; padding: 2px 10px; height: 32px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); margin-right: 4px; box-sizing: border-box;">
+          <!-- Swatches (Kotak-kotak kecil seukuran icon) -->
+          <div id="paletteHeaderSwatches" style="display: flex; gap: 4px; align-items: center;"></div>
+
+          <!-- Tombol Ubah Gambar di sisi paling kanan -->
+          <button onclick="document.getElementById('paletteHeaderFileInput').click()"
+            title="Ubah Logo/Gambar untuk Palet"
+            style="background: none; border: none; padding: 2px; cursor: pointer; color: #38a0c4; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; transition: all 0.2s;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+          </button>
+          <input type="file" id="paletteHeaderFileInput" accept="image/*" style="display: none;"
+            onchange="handlePaletteImageUpload(event)" />
+        </div>
+
+        <!-- Palette Tool -->
+        <button id="btnPalette" class="btn-icon hidden {% if not is_admin %}hidden{% endif %}" {% if not is_admin
+          %}style="display: none;" {% endif %} onclick="togglePaletteModal()" title="Konversi Gambar ke Palet Warna">
+          <svg id="pallete-svg-id" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="28" height="28"
+            version="1.1"
+            style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; width: 28px; height: 28px;"
+            viewBox="0 0 1200 1200" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+              <style type="text/css">
+                <![CDATA[
+                #pallete-svg-id .pt-fil3 {
+                  fill: #256D85
+                }
+
+                #pallete-svg-id .pt-fil4 {
+                  fill: #2E7D32
+                }
+
+                #pallete-svg-id .pt-fil2 {
+                  fill: #38A0C4
+                }
+
+                #pallete-svg-id .pt-fil7 {
+                  fill: #4D4D4D
+                }
+
+                #pallete-svg-id .pt-fil8 {
+                  fill: #706C6C
+                }
+
+                #pallete-svg-id .pt-fil5 {
+                  fill: #A32F2F
+                }
+
+                #pallete-svg-id .pt-fil12 {
+                  fill: #B8B6B6
+                }
+
+                #pallete-svg-id .pt-fil13 {
+                  fill: #BDB29F
+                }
+
+                #pallete-svg-id .pt-fil0 {
+                  fill: #C0D4DB
+                }
+
+                #pallete-svg-id .pt-fil10 {
+                  fill: #C9C7C7
+                }
+
+                #pallete-svg-id .pt-fil11 {
+                  fill: #D6D3D3
+                }
+
+                #pallete-svg-id .pt-fil6 {
+                  fill: #D9CEBA
+                }
+
+                #pallete-svg-id .pt-fil9 {
+                  fill: #DEDEDE
+                }
+
+                #pallete-svg-id .pt-fil14 {
+                  fill: #EBD8B5
+                }
+
+                #pallete-svg-id .pt-fil1 {
+                  fill: #F0D154
+                }
+                ]]>
+              </style>
+            </defs>
+            <g id="Layer_x0020_1">
+              <metadata id="CorelCorpID_0Corel-Layer" />
+              <g id="_2643366385072">
+                <path class="pt-fil0"
+                  d="M628 360c17,6 32,14 49,24 17,11 36,26 52,43 15,18 28,39 35,62 7,22 8,45 7,63 -1,19 -5,33 -12,50 -7,18 -16,38 -20,52 -4,15 -3,22 -1,30 2,7 5,13 10,20 5,6 11,13 19,17 8,4 16,6 24,4 8,-2 15,-6 24,-8 9,-1 20,0 30,2 10,3 19,8 25,14 7,5 11,13 11,25 0,12 -3,29 -10,47 -8,18 -19,37 -31,53 -12,17 -26,31 -41,45 -16,14 -34,29 -53,41 -19,13 -38,24 -59,32 -21,7 -43,12 -68,15 -24,2 -51,2 -83,-2 -33,-4 -70,-13 -101,-25 -31,-12 -56,-28 -79,-48 -23,-19 -43,-42 -59,-65 -16,-23 -27,-45 -35,-66 -7,-22 -12,-43 -15,-64 -3,-21 -4,-41 -3,-62 1,-22 5,-45 12,-70 7,-26 19,-53 30,-75 11,-22 21,-39 35,-57 13,-18 30,-37 46,-51 15,-14 30,-23 46,-32 16,-8 33,-17 53,-22 19,-6 40,-8 58,-9 19,-1 35,0 52,3 17,3 35,8 52,14z" />
+                <ellipse class="pt-fil1" cx="623" cy="884" rx="52" ry="44" />
+                <ellipse class="pt-fil2" cx="433" cy="814" rx="52" ry="44" />
+                <ellipse class="pt-fil3" cx="362" cy="667" rx="52" ry="44" />
+                <ellipse class="pt-fil4" cx="385" cy="501" rx="52" ry="44" />
+                <ellipse class="pt-fil5" cx="531" cy="420" rx="52" ry="44" />
+                <g>
+                  <path class="pt-fil6"
+                    d="M579 620c5,-9 14,-19 25,-26 11,-8 23,-13 33,-15 10,-2 19,-1 27,4 8,5 16,13 24,20 7,8 15,14 18,23 3,8 2,19 0,31 -3,11 -8,23 -13,32 -5,9 -10,16 -18,22 -7,7 -17,13 -30,20 -12,7 -27,15 -46,19 -18,5 -39,6 -55,6 -15,0 -24,-1 -29,-3 -5,-2 -6,-6 -5,-10 1,-4 4,-10 8,-14 4,-5 8,-9 14,-14 6,-6 12,-13 18,-21 6,-8 11,-16 14,-25 3,-8 5,-16 6,-24 2,-8 3,-16 9,-25z" />
+                  <polygon class="pt-fil7" points="819,185 640,537 739,587 882,218 " />
+                  <polygon class="pt-fil8" points="825,189 647,541 676,556 849,202 " />
+                  <polygon class="pt-fil9" points="819,184 806,211 836,226 849,200 " />
+                  <polygon class="pt-fil10" points="849,200 836,227 871,244 883,217 " />
+                  <polygon class="pt-fil11" points="641,536 740,586 701,618 637,583 " />
+                  <polygon class="pt-fil12" points="657,595 683,558 650,541 638,585 " />
+                  <path class="pt-fil13"
+                    d="M655 629c-1,11 5,24 8,35 2,12 0,22 -5,29 -6,8 -15,12 -29,17 -14,5 -31,10 -51,16 -19,6 -39,14 -60,21 1,2 3,3 5,4 5,2 14,3 28,3 15,0 35,-1 53,-5 17,-5 32,-12 44,-19 12,-7 22,-12 29,-19 7,-6 12,-12 17,-21 5,-9 9,-20 12,-31 2,-11 3,-22 0,-30 -1,-3 -3,-5 -4,-8l-1 1 -30 -17c-8,7 -15,14 -16,24z" />
+                  <path class="pt-fil14"
+                    d="M641 590c9,1 15,8 13,16 -2,9 -11,19 -15,29 -4,9 -3,17 -3,25 0,7 -1,14 -7,19 -6,5 -18,7 -20,12 -3,5 4,12 -4,17 -8,5 -30,6 -41,5 -10,-1 -10,-5 -8,-13 2,-8 5,-20 10,-31 4,-11 9,-21 17,-33 7,-12 17,-26 27,-35 11,-9 23,-13 31,-11z" />
+                  <path class="pt-fil2"
+                    d="M514 742c-1,4 0,7 5,9 5,2 13,3 28,3 8,0 19,0 30,-2 -4,-4 -7,-8 -9,-10 -2,-2 -4,-3 -4,-7 -1,-4 -1,-12 -5,-16 -4,-5 -12,-6 -20,-8 -1,2 -3,3 -4,4 -5,5 -10,9 -13,13 -4,4 -7,10 -8,14z" />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </button>
+
+        <!-- Undo Design -->
+        <button id="btnUndo" class="btn-icon hidden" onclick="undo()" title="Undo (Ctrl+Z)" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 7v6h6"></path>
+            <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path>
+          </svg>
+        </button>
+
+        <!-- Redo Design -->
+        <button id="btnRedo" class="btn-icon hidden" onclick="redo()" title="Redo (Ctrl+Y)" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 7v6h-6"></path>
+            <path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path>
+          </svg>
+        </button>
+
+        <!-- Toggle Edit/Preview Mode -->
+        <button id="btnToggleMode" class="btn-icon {% if not is_admin %}hidden{% endif %}" {% if not is_admin
+          %}style="display: none;" {% endif %} onclick="toggleEditMode()" title="Ubah Mode (Preview/Edit)">
+          <svg id="modeIcon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="28" height="28"
+            version="1.1"
+            style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; width: 28px; height: 28px;"
+            viewBox="0 0 1200 1200" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+              <style type="text/css">
+                <![CDATA[
+                #modeIcon .eb-str0 {
+                  stroke: #189DC9;
+                  stroke-width: 20;
+                  stroke-dasharray: 40.000000 20.000000
+                }
+
+                #modeIcon .eb-fil1 {
+                  fill: none
+                }
+
+                #modeIcon .eb-fil3 {
+                  fill: #4D4D4D
+                }
+
+                #modeIcon .eb-fil2 {
+                  fill: #706C6C
+                }
+
+                #modeIcon .eb-fil6 {
+                  fill: #8A8585
+                }
+
+                #modeIcon .eb-fil0 {
+                  fill: #95B4BF
+                }
+
+                #modeIcon .eb-fil8 {
+                  fill: #B8B6B6
+                }
+
+                #modeIcon .eb-fil4 {
+                  fill: #C9C7C7
+                }
+
+                #modeIcon .eb-fil7 {
+                  fill: #D6D3D3
+                }
+
+                #modeIcon .eb-fil5 {
+                  fill: #DEDEDE
+                }
+                ]]>
+              </style>
+            </defs>
+            <g id="Layer_x0020_1">
+              <metadata id="CorelCorpID_0Corel-Layer" />
+              <g id="_2643362114304">
+                <ellipse class="eb-fil0" cx="564" cy="705" rx="143" ry="58" />
+                <rect class="eb-fil1 eb-str0" x="229" y="338" width="744" height="626" />
+                <g>
+                  <path class="eb-fil2" d="M831 171c-9,-5 -19,-1 -24,8l-19 42 32 16 20 -42c4,-9 1,-20 -9,-24z" />
+                  <polygon class="eb-fil3" points="762,205 605,515 691,559 849,249 " />
+                  <polygon class="eb-fil2" points="768,209 610,518 636,532 789,219 " />
+                  <polygon class="eb-fil4" points="788,218 777,241 837,272 849,249 " />
+                  <polygon class="eb-fil5" points="762,204 750,227 777,241 788,217 " />
+                  <path class="eb-fil4" d="M683 243l-140 265c-4,8 -1,18 7,22l7 4 136 -258c-8,-9 -12,-21 -10,-33z" />
+                  <path class="eb-fil6"
+                    d="M685 232l0 0c10,-20 34,-27 54,-17l16 9 -37 71 -16 -9c-20,-10 -27,-34 -17,-54z" />
+                  <polygon class="eb-fil7" points="605,512 553,648 582,661 612,673 691,556 " />
+                  <polygon class="eb-fil8" points="612,516 560,652 575,658 638,529 " />
+                  <polygon class="eb-fil3" points="554,647 559,676 564,705 589,688 613,672 583,659 " />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </button>
+
+        <!-- Save Design -->
+        <button id="btnSave" class="btn-icon primary-glow hidden" onclick="saveLandingPage()" title="Simpan Desain">
+          <svg id="save-svg-id" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="28" height="28"
+            version="1.1"
+            style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; width: 28px; height: 28px;"
+            viewBox="0 0 1200 1200" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+              <style type="text/css">
+                <![CDATA[
+                #save-svg-id .sv-fil0 {
+                  fill: #0F4C75
+                }
+
+                #save-svg-id .sv-fil2 {
+                  fill: #2E7D99
+                }
+
+                #save-svg-id .sv-fil1 {
+                  fill: #EBE8E8
+                }
+                ]]>
+              </style>
+            </defs>
+            <g id="Layer_x0020_1">
+              <metadata id="CorelCorpID_0Corel-Layer" />
+              <g id="_2643470593168">
+                <path class="sv-fil0"
+                  d="M318 298l0 584c0,38 31,69 69,69l437 0c38,0 69,-31 69,-69l0 -494 -159 -159 -347 0c-38,0 -69,31 -69,69z" />
+                <path class="sv-fil1" d="M736 226l-336 0 0 56c0,23 19,41 41,41l261 0c22,0 41,-18 41,-41l0 -49 -7 -7z" />
+                <path class="sv-fil1"
+                  d="M440 630c-28,0 -51,23 -51,51l0 251 432 0c0,0 1,0 1,0l0 -251c0,-28 -23,-51 -51,-51l-331 0z" />
+                <polygon class="sv-fil2" points="792,696 427,696 427,769 791,770 " />
+                <polygon class="sv-fil2" points="792,809 427,809 427,883 791,883 " />
+              </g>
+            </g>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Horizontal Toolbox Row (Admin Only) -->
+    <div id="toolboxRow" class="toolbox-row hidden">
+      <div class="toolbox-scroll">
+        <div class="toolbox-chip" draggable="true" data-type="title" onclick="createNewElement('title', 10, 8)">
+          <span class="chip-icon">T</span> Judul
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="text" onclick="createNewElement('text', 10, 18)">
+          <span class="chip-icon">P</span> Paragraf
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="image" onclick="createNewElement('image', 10, 35)">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </span>
+          Gambar
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="shape" onclick="createNewElement('shape', 10, 32)">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            </svg>
+          </span>
+          Box
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="container"
+          onclick="createNewElement('container', 10, 32)">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="4" ry="4" stroke-dasharray="3 3"></rect>
+            </svg>
+          </span>
+          Kontainer
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="column" onclick="createNewElement('column', 10, 32)">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="18" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="18" rx="1"></rect>
+            </svg>
+          </span>
+          Kolom
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="row" onclick="createNewElement('row', 10, 32)">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="7" rx="1"></rect>
+              <rect x="3" y="14" width="18" height="7" rx="1"></rect>
+            </svg>
+          </span>
+          Baris
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="carousel" onclick="createNewElement('carousel', 10, 32)">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </span>
+          Carousel
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="button" onclick="createNewElement('button', 10, 78)">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </span>
+          Tombol
+        </div>
+        <div class="toolbox-chip" draggable="true" data-type="media_embed"
+          onclick="createNewElement('media_embed', 10, 32)">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+              <line x1="7" y1="2" x2="7" y2="22"></line>
+              <line x1="17" y1="2" x2="17" y2="22"></line>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+            </svg>
+          </span>
+          Media Embed
+        </div>
+        <div class="toolbox-chip bg-setting-chip" onclick="openBgSettings()">
+          <span class="chip-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.03345 19.1749 5.0999 19.4293 5.0243 19.6619C4.85108 20.1949 4.81057 20.8925 5.25304 21.335C5.69552 21.7774 6.3931 21.7369 6.9261 21.5637C7.1587 21.4881 7.4131 21.5545 7.588 21.7294C9.39 23.51 11.83 22 12 22Z">
+              </path>
+              <circle cx="7.5" cy="10.5" r="1" fill="currentColor"></circle>
+              <circle cx="11.5" cy="7.5" r="1" fill="currentColor"></circle>
+              <circle cx="16.5" cy="9.5" r="1" fill="currentColor"></circle>
+              <circle cx="15.5" cy="14.5" r="1" fill="currentColor"></circle>
+            </svg>
+          </span>
+          BG Halaman
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Workspace (Canvas Area) -->
+    <div class="canvas-workspace" id="canvasWorkspace">
+      <!-- The Interactive Canvas -->
+      <div class="landing-canvas" id="canvas">
+        <!-- Dynamic Builder Elements rendered here -->
+        <!-- Snap guide line -->
+        <div id="snapGuideLine" class="snap-guide-line" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- Properties Drawer (Admin Only - Slides up when element/bg selected) -->
+    <div id="propertiesDrawer" class="properties-drawer hidden">
+      <div class="drawer-header">
+        <span class="drawer-title" id="drawerTitle">Pengaturan Elemen</span>
+        <button class="drawer-close" onclick="deselectAll()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-content">
+        <!-- BG SETTINGS PANEL -->
+        <div id="bgSettingsPanel" class="prop-panel-sec hidden">
+          <div class="prop-row">
+            <label class="prop-label">Tipe Latar Belakang</label>
+            <select id="bgType" onchange="updateBgStyle()" class="prop-select">
+              <option value="color">Solid Color (Satu Warna)</option>
+              <option value="gradient">Gradient (Gradasi)</option>
+              <option value="image">Gambar Latar Belakang (Image)</option>
+            </select>
+          </div>
+          <div class="prop-row">
+            <label class="prop-label">Tinggi Halaman (Canvas Height)</label>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <input type="number" id="canvasHeightInput" class="prop-input" style="flex: 1;" value="800" min="200"
+                max="5000" oninput="changeCanvasHeight(this.value)" placeholder="Tinggi dalam px" />
+              <span style="font-size: 13px; color: #555;">px</span>
+            </div>
+          </div>
+
+          <div id="solidBgGroup" class="prop-row">
+            <label class="prop-label">Pilih Warna</label>
+            <div class="color-picker-row">
+              <input type="color" id="bgSolidColor" value="#f2f7f9" oninput="updateBgStyle()"
+                class="prop-color-input" />
+              <span id="bgSolidHex" class="hex-label">#f2f7f9</span>
+            </div>
+          </div>
+
+          <div id="imageBgGroup" class="prop-row hidden"
+            style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px;">
+            <div class="prop-row">
+              <label class="prop-label">Upload File Gambar Latar</label>
+              <div class="image-upload-wrapper">
+                <button class="btn-image-upload">Pilih Gambar</button>
+                <input type="file" id="bgImageUpload" accept="image/*" onchange="uploadBgImage(event)" />
+              </div>
+            </div>
+
+            <div class="prop-row" id="bgCropBtnRow" style="display: none;">
+              <button onclick="openBgCropModal()"
+                style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #38a0c4; background: #f0f9fc; color: #38a0c4; font-weight: bold; cursor: pointer; font-size: 12px;">Resize
+                & Crop Gambar</button>
+            </div>
+            <div class="prop-row">
+              <label class="prop-label">Transparansi Gambar (<span id="bgOpacityVal">100</span>%)</label>
+              <input type="range" id="bgOpacitySlider" min="0" max="100" value="100" class="prop-range"
+                oninput="updateBgImageOpacity(this.value)" />
+            </div>
+          </div>
+
+          <div id="gradientBgGroup" class="prop-row hidden">
+            <label class="prop-label">Preset Gradasi Cantik</label>
+            <div class="preset-gradients">
+              <div class="gradient-preset" style="background: linear-gradient(135deg, #dfecf1, #ffffff)" onclick="
+                    setPresetGradient(
+                      'linear-gradient(135deg, #dfecf1, #ffffff)',
+                    )
+                  " title="Light Blue Gradient"></div>
+              <div class="gradient-preset" style="background: linear-gradient(135deg, #bddce7, #dfecf1)" onclick="
+                    setPresetGradient(
+                      'linear-gradient(135deg, #bddce7, #dfecf1)',
+                    )
+                  " title="Teal Gradient"></div>
+              <div class="gradient-preset" style="background: linear-gradient(135deg, #38a0c4, #8d98e0)" onclick="
+                    setPresetGradient(
+                      'linear-gradient(135deg, #38a0c4, #8d98e0)',
+                    )
+                  " title="Brand Indigo Gradient"></div>
+              <div class="gradient-preset" style="background: linear-gradient(135deg, #2c5d6b, #38a0c4)" onclick="
+                    setPresetGradient(
+                      'linear-gradient(135deg, #2c5d6b, #38a0c4)',
+                    )
+                  " title="Deep Teal Gradient"></div>
+              <div class="gradient-preset" style="background: linear-gradient(135deg, #1e1b4b, #2c5d6b)" onclick="
+                    setPresetGradient(
+                      'linear-gradient(135deg, #1e1b4b, #2c5d6b)',
+                    )
+                  " title="Midnight Forest Gradient"></div>
+              <div class="gradient-preset" style="background: linear-gradient(135deg, #ffffff, #eaeaea)" onclick="
+                    setPresetGradient(
+                      'linear-gradient(135deg, #ffffff, #eaeaea)',
+                    )
+                  " title="Soft Gray Gradient"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ELEMENT PROPERTIES PANEL -->
+        <div id="elementPropertiesPanel" class="prop-panel-sec hidden">
+          <!-- Text Component Settings -->
+          <div id="groupText" class="prop-group hidden">
+            <div class="prop-row">
+              <label class="prop-label">Isi Teks</label>
+              <textarea id="propTextContent" oninput="updateSelectedElementContent()" class="prop-textarea"></textarea>
+            </div>
+            <!-- AI Assist Copywriter Panel -->
+            <div class="ai-assist-panel"
+              style="margin-top: 12px; padding: 12px; background: linear-gradient(135deg, #f0f7f9, #e2f0f5); border: 1px solid #bddce7; border-radius: 12px; box-shadow: 0 4px 10px rgba(56,160,196,0.05);">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <img src="/static/image/icon/ai-assist.svg" style="width: 28px; height: 28px;" alt="AI">
+                <span class="prop-label"
+                  style="color: #2c5d6b; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">AI
+                  Marketing Assistant</span>
+              </div>
+              <div class="prop-row" style="margin-bottom: 8px;">
+                <textarea id="propAiPrompt" class="prop-textarea"
+                  style="min-height: 48px; background: #ffffff; font-size: 12px;"
+                  placeholder="Tulis instruksi copywriting... (contoh: 'buat judul diskon makanan yang mendesak')"></textarea>
+              </div>
+              <button onclick="askAICopywriter(); return false;" class="btn-image-upload"
+                style="background: linear-gradient(135deg, #38a0c4, #8d98e0); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold; width: 100%; border-radius: 8px; padding: 8px 12px;">
+                <span id="aiAssistBtnText">Tanya AI Assist</span>
+                <div id="aiAssistSpinner" class="loader-spinner hidden"
+                  style="width: 14px; height: 14px; border-width: 2px;"></div>
+              </button>
+
+              <!-- AI Suggestions Area -->
+              <div id="aiSuggestionsArea" class="hidden"
+                style="margin-top: 10px; border-top: 1px dashed #bddce7; padding-top: 10px;">
+                <label class="prop-label" style="color: #2c5d6b; margin-bottom: 4px; display: block;">Rekomendasi
+                  Copywriting & Ide Pemasaran:</label>
+                <div id="aiSuggestionsContent"
+                  style="background: white; border: 1px solid #bddce7; border-radius: 8px; padding: 10px; font-size: 12px; color: #333; max-height: 180px; overflow-y: auto; text-align: left; line-height: 1.5; white-space: pre-wrap; font-family: system-ui, -apple-system, sans-serif;">
+                </div>
+
+              </div>
+            </div>
+            <div class="prop-row-split">
+              <div>
+                <label class="prop-label">Ukuran Font (<span id="fontSizeVal">16</span>px)</label>
+                <input type="range" id="propFontSize" min="10" max="60" value="16" oninput="
+                      document.getElementById('fontSizeVal').innerText =
+                        this.value;
+                      updateSelectedElementStyle('fontSize', this.value + 'px');
+                    " class="prop-range" />
+              </div>
+              <div>
+                <label class="prop-label">Ketebalan</label>
+                <select id="propFontWeight" onchange="
+                      updateSelectedElementStyle('fontWeight', this.value)
+                    " class="prop-select">
+                  <option value="300">Tipis (Light)</option>
+                  <option value="400">Normal (Regular)</option>
+                  <option value="600">Sedang (Semi-Bold)</option>
+                  <option value="700">Tebal (Bold)</option>
+                  <option value="800">Sangat Tebal</option>
+                </select>
+              </div>
+            </div>
+            <div class="prop-row-split">
+              <div>
+                <label class="prop-label">Rata Paragraf</label>
+                <select id="propTextAlign" onchange="
+                      updateSelectedElementStyle('textAlign', this.value)
+                    " class="prop-select">
+                  <option value="left">Kiri</option>
+                  <option value="center">Tengah</option>
+                  <option value="right">Kanan</option>
+                  <option value="justify">Rata Kiri-Kanan</option>
+                </select>
+              </div>
+              <div class="prop-row">
+                <label class="prop-label">Warna Teks</label>
+                <div class="color-picker-row">
+                  <input type="color" id="propTextColor" oninput="updateSelectedElementStyle('color', this.value)"
+                    class="prop-color-input" />
+                  <span id="propTextColorHex" class="hex-label">#ffffff</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Component Settings -->
+          <div id="groupImage" class="prop-group hidden">
+            <div class="prop-row">
+              <label class="prop-label">Upload File Gambar</label>
+              <div class="image-upload-wrapper">
+                <button class="btn-image-upload">Pilih File Gambar</button>
+                <input type="file" id="propImageUpload" accept="image/*" onchange="uploadElementImage(event)" />
+              </div>
+            </div>
+
+            <div class="prop-row">
+              <label class="prop-label">Skala Tampilan Gambar (Object Fit)</label>
+              <select id="propObjectFit" onchange="updateSelectedElementStyle('objectFit', this.value)"
+                class="prop-select">
+                <option value="cover">
+                  Penuhi & Potong Sesuai Box (Cover)
+                </option>
+                <option value="contain">Utuh Tanpa Potong (Contain)</option>
+                <option value="fill">Tarik Paksa Sesuai Box (Fill)</option>
+              </select>
+            </div>
+            <div class="prop-row" style="margin-top: 12px;">
+              <button onclick="triggerImageRembg()"
+                style="width: 100%; padding: 8px 12px; border-radius: 8px; border: none; background: linear-gradient(135deg, #38a0c4, #8d98e0); color: white; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 6px rgba(56, 160, 196, 0.2);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.03345 19.1749 5.0999 19.4293 5.0243 19.6619C4.85108 20.1949 4.81057 20.8925 5.25304 21.335C5.69552 21.7774 6.3931 21.7369 6.9261 21.5637C7.1587 21.4881 7.4131 21.5545 7.588 21.7294C9.39 23.51 11.83 22 12 22Z">
+                  </path>
+                </svg>
+                Transparankan Latar (AI rembg)
+              </button>
+            </div>
+          </div>
+
+          <!-- Fill & Stroke Panel (Shape, Container, Column, Row, Button) -->
+          <div id="groupShape" class="prop-group hidden">
+
+            <!-- ── FILL SECTION ────────────────────── -->
+            <div class="fs-section">
+              <div class="fs-section-header">
+                <span class="fs-title">Fill</span>
+                <button id="btnFillToggle" class="fs-eye-btn fs-active" onclick="toggleFillEnabled()"
+                  title="Toggle Fill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+              </div>
+              <div id="fillContextHint" class="fs-context-hint hidden"></div>
+              <div id="fillBodyPanel">
+                <div class="fill-type-row">
+                  <button class="fill-tab active" id="tabSolid" onclick="setFillType('solid')">Solid</button>
+                  <button class="fill-tab" id="tabLinear" onclick="setFillType('linear')">Linear</button>
+                  <button class="fill-tab" id="tabRadial" onclick="setFillType('radial')">Radial</button>
+                </div>
+                <!-- Solid row -->
+                <div id="solidFillRow" class="fs-color-row">
+                  <input type="color" id="fillColorInput" class="fs-swatch-input" oninput="onFillSolidColor(this.value)"
+                    value="#38a0c4" title="Pilih warna" />
+                  <input type="text" id="fillHexInput" class="fs-hex-input" maxlength="6" placeholder="38a0c4"
+                    oninput="onFillHexText(this.value)" />
+                  <input type="number" id="fillOpacityInput" class="fs-opacity-input" min="0" max="100" value="100"
+                    oninput="onFillOpacity(this.value); document.getElementById('fillOpacitySlider').value=this.value;" />
+                  <span class="fs-percent">%</span>
+                </div>
+                <div id="solidOpacityRow" class="fs-slider-row">
+                  <input type="range" id="fillOpacitySlider" min="0" max="100" value="100" class="prop-range"
+                    oninput="document.getElementById('fillOpacityInput').value=this.value; onFillOpacity(this.value);" />
+                </div>
+                <!-- Gradient panel -->
+                <div id="gradientFillPanel" class="hidden">
+                  <div class="grad-preview-wrap">
+                    <div id="gradPreviewBar" class="grad-preview-bar"></div>
+                  </div>
+                  <div id="gradAngleRow" class="fs-slider-row" style="margin-top:8px;">
+                    <label class="prop-label">Sudut (<span id="gradAngleLbl">135</span>°)</label>
+                    <div class="slider-number-row">
+                      <input type="range" id="gradAngleSlider" min="0" max="360" value="135" class="prop-range"
+                        oninput="document.getElementById('gradAngleLbl').innerText=this.value; document.getElementById('gradAngleInput').value=this.value; onGradientAngleChange(this.value);" />
+                      <input type="number" id="gradAngleInput" min="0" max="360" value="135"
+                        class="prop-input-number prop-input-mini"
+                        oninput="const v=((parseInt(this.value)||0)+360)%361; document.getElementById('gradAngleLbl').innerText=v; document.getElementById('gradAngleSlider').value=v; onGradientAngleChange(v);" />
+                    </div>
+                  </div>
+                  <div class="grad-stops-header">
+                    <span class="prop-label">Stops</span>
+                    <button class="fs-add-stop-btn" onclick="addGradientStop()" title="Tambah stop">+</button>
+                  </div>
+                  <div id="gradStopsList" class="grad-stops-list"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="fs-divider"></div>
+
+            <!-- ── BLUR / GLASS SECTION ────────────────────── -->
+            <div class="fs-section">
+              <label class="prop-label">Efek Glassmorphism (Backdrop Blur)</label>
+              <select id="propShapeBlur" onchange="updateSelectedElementBlur(this.value)" class="prop-select"
+                style="margin-top:6px;">
+                <option value="none">Tanpa Efek Kaca (Solid)</option>
+                <option value="blur(4px)">Kaca Tipis</option>
+                <option value="blur(8px)">Kaca Sedang</option>
+                <option value="blur(16px)">Kaca Tebal</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Button CTA Settings -->
+          <div id="groupButton" class="prop-group hidden">
+            <div class="prop-row-split">
+              <div>
+                <label class="prop-label">Teks Tombol</label>
+                <input type="text" id="propBtnText" class="prop-input" oninput="updateSelectedElementContent()" />
+              </div>
+              <div>
+                <label class="prop-label">Tautan Link (WhatsApp / URL)</label>
+                <input type="text" id="propBtnUrl" class="prop-input" placeholder="https://..."
+                  oninput="updateSelectedElementLink(this.value)" />
+              </div>
+            </div>
+            <div class="prop-row">
+              <label class="prop-label">Warna Teks Tombol</label>
+              <div class="color-picker-row">
+                <input type="color" id="propBtnTextColor" oninput="updateSelectedElementStyle('color', this.value)"
+                  class="prop-color-input" />
+                <span id="propBtnTextColorHex" class="hex-label">#ffffff</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carousel Component Settings -->
+          <div id="groupCarousel" class="prop-group hidden">
+            <div class="prop-row">
+              <label class="prop-label">Upload File Gambar (Bisa Pilih Banyak)</label>
+              <div class="image-upload-wrapper">
+                <button class="btn-image-upload"
+                  onclick="document.getElementById('propCarouselUpload').click(); return false;">Pilih File
+                  Gambar</button>
+                <input type="file" id="propCarouselUpload" accept="image/*" multiple
+                  onchange="uploadCarouselImages(event)" style="display: none;" />
+              </div>
+            </div>
+            <div class="prop-row">
+              <label class="prop-label">Kelola Gambar Carousel</label>
+              <div id="propCarouselList" class="carousel-thumbs-list"
+                style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px;"></div>
+            </div>
+
+            <div class="prop-row-split">
+              <div>
+                <label class="prop-label">Auto Play Speed (detik, 0 = mati)</label>
+                <input type="number" id="propCarouselSpeed" min="0" max="10" value="3"
+                  oninput="updateSelectedCarouselSpeed(this.value)" class="prop-input-number" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Row Component Settings -->
+          <div id="groupRow" class="prop-group hidden">
+            <div class="prop-row">
+              <label class="prop-label">Jumlah Kolom dalam Baris</label>
+              <select id="propRowColumnsCount" onchange="updateRowColumnsCount(this.value)" class="prop-select">
+                <option value="1">1 Kolom</option>
+                <option value="2">2 Kolom</option>
+                <option value="3">3 Kolom</option>
+                <option value="4">4 Kolom</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Column Component Settings -->
+          <div id="groupColumn" class="prop-group hidden">
+            <div class="prop-row">
+              <label class="prop-label">Lebar Kolom (Membagi Ruang Secara Vertikal)</label>
+              <select id="propColumnWidth" onchange="updateColumnWidth(this.value)" class="prop-select">
+                <option value="100%">Penuh (1 Kolom - 100%)</option>
+                <option value="calc(50% - 6px)">Setengah (2 Kolom - 50%)</option>
+                <option value="calc(33.33% - 8px)">Sepertiga (3 Kolom - 33.3%)</option>
+                <option value="calc(66.66% - 4px)">Dua Pertiga (2/3 - 66.7%)</option>
+                <option value="calc(25% - 9px)">Seperempat (4 Kolom - 25%)</option>
+                <option value="calc(75% - 3px)">Tiga Perempat (3/4 - 75%)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Media Embed Component Settings -->
+          <div id="groupMediaEmbed" class="prop-group hidden">
+            <div class="prop-row">
+              <label class="prop-label">Link / URL Media (YouTube, Google Maps, Website, dll)</label>
+              <input type="text" id="propMediaEmbedUrl" class="prop-input" oninput="updateMediaEmbedUrl(this.value)"
+                placeholder="https://www.youtube.com/watch?v=... atau https://www.google.com/maps/..." />
+            </div>
+          </div>
+
+          <!-- General Box Model Layout Options -->
+          <div class="general-properties">
+            <div class="prop-row-split">
+              <div>
+                <label class="prop-label">Lebar Elemen (<span id="widthVal">80</span>%)</label>
+                <input type="range" id="propWidth" min="5" max="100" value="80" oninput="
+                      document.getElementById('widthVal').innerText =
+                        this.value;
+                      updateSelectedElementStyle('width', this.value + '%');
+                    " class="prop-range" />
+              </div>
+              <div>
+                <label class="prop-label">Lengkungan Sudut (Border Radius)</label>
+                <input type="range" id="propBorderRadius" min="0" max="50" value="8" oninput="
+                      updateSelectedElementStyle(
+                        'borderRadius',
+                        this.value + 'px',
+                      )
+                    " class="prop-range" />
+              </div>
+            </div>
+
+            <!-- Posisi Y + Gap Bottom with sliders -->
+            <div class="prop-row">
+              <label class="prop-label">Posisi Y – Dari Atas (<span id="topPxVal">0</span>px)</label>
+              <div class="slider-number-row">
+                <input type="range" id="propTopPxSlider" min="0" max="2000" value="0" class="prop-range" oninput="
+                    document.getElementById('topPxVal').innerText = this.value;
+                    document.getElementById('propTopPx').value = this.value;
+                    updateSelectedElementTopPx(this.value);
+                  " />
+                <input type="number" id="propTopPx" min="0" max="5000" value="0"
+                  class="prop-input-number prop-input-mini" oninput="
+                    const v = parseInt(this.value) || 0;
+                    document.getElementById('topPxVal').innerText = v;
+                    const sl = document.getElementById('propTopPxSlider');
+                    sl.value = Math.min(v, parseInt(sl.max));
+                    updateSelectedElementTopPx(v);
+                  " />
+                <button class="btn-snap-below" onclick="snapElementBelowPrevious()"
+                  title="Tempel ke bawah elemen di atasnya">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="2" x2="12" y2="22"></line>
+                    <polyline points="5 15 12 22 19 15"></polyline>
+                  </svg>
+                  Tempel
+                </button>
+              </div>
+            </div>
+
+            <div class="prop-row">
+              <label class="prop-label">Jarak Antar Elemen – Gap Bawah (<span id="gapBottomVal">0</span>px)</label>
+              <div class="slider-number-row">
+                <input type="range" id="propGapBottomSlider" min="0" max="200" value="0" class="prop-range" oninput="
+                    document.getElementById('gapBottomVal').innerText = this.value;
+                    document.getElementById('propGapBottom').value = this.value;
+                    updateSelectedElementGapBottom(parseInt(this.value) || 0);
+                  " />
+                <input type="number" id="propGapBottom" min="0" max="200" value="0"
+                  class="prop-input-number prop-input-mini" oninput="
+                    const v = parseInt(this.value) || 0;
+                    document.getElementById('gapBottomVal').innerText = v;
+                    document.getElementById('propGapBottomSlider').value = Math.min(v, 200);
+                    updateSelectedElementGapBottom(v);
+                  " />
+              </div>
+            </div>
+
+            <div class="prop-row-split">
+              <div>
+                <label class="prop-label">Tinggi (<span id="heightVal">100</span>px / Auto)</label>
+                <div class="slider-number-row">
+                  <input type="range" id="propHeightSlider" min="10" max="800" value="100" class="prop-range" oninput="
+                      document.getElementById('heightVal').innerText = this.value;
+                      document.getElementById('propHeight').value = this.value;
+                      updateSelectedElementStyle('height', this.value + 'px');
+                    " />
+                  <input type="number" id="propHeight" min="10" max="5000" value="100"
+                    class="prop-input-number prop-input-mini" oninput="
+                      const v = parseInt(this.value) || 10;
+                      document.getElementById('heightVal').innerText = v;
+                      document.getElementById('propHeightSlider').value = Math.min(v, 800);
+                      updateSelectedElementStyle('height', v + 'px');
+                    " placeholder="px" />
+                  <button class="btn-auto-height" onclick="
+                      updateSelectedElementStyle('height', 'auto');
+                      document.getElementById('propHeight').value = '';
+                      document.getElementById('heightVal').innerText = 'Auto';
+                      document.getElementById('propHeightSlider').value = 10;
+                    ">
+                    Auto
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="prop-label">Z-Index (<span id="zIndexVal">5</span>)</label>
+                <div class="slider-number-row">
+                  <input type="range" id="propZIndexSlider" min="1" max="100" value="5" class="prop-range" oninput="
+                      document.getElementById('zIndexVal').innerText = this.value;
+                      document.getElementById('propZIndex').value = this.value;
+                      updateSelectedElementStyle('zIndex', this.value);
+                    " />
+                  <input type="number" id="propZIndex" min="1" max="100" value="5"
+                    class="prop-input-number prop-input-mini" oninput="
+                      const v = Math.min(Math.max(parseInt(this.value) || 1, 1), 100);
+                      document.getElementById('zIndexVal').innerText = v;
+                      document.getElementById('propZIndexSlider').value = v;
+                      updateSelectedElementStyle('zIndex', v);
+                    " />
+                </div>
+              </div>
+            </div>
+
+            <div class="prop-row-split">
+              <div>
+                <label class="prop-label">Penyelarasan (Alignment)</label>
+                <select id="propAlignment" onchange="updateSelectedElementAlignment(this.value)" class="prop-select">
+                  <option value="left">Kiri (Left)</option>
+                  <option value="center">Tengah (Center)</option>
+                  <option value="right">Kanan (Right)</option>
+                  <option value="stretch">Regang (Stretch)</option>
+                </select>
+              </div>
+              <div>
+                <label class="prop-label">Padding Elemen (<span id="paddingVal">0</span>px)</label>
+                <input type="range" id="propPadding" min="0" max="100" value="0" oninput="
+                      document.getElementById('paddingVal').innerText = this.value;
+                      updateSelectedElementStyle('padding', this.value + 'px');
+                    " class="prop-range" />
+              </div>
+            </div>
+
+            <!-- ── STROKE SECTION (INTEGRATED) ────────────────────── -->
+            <div class="fs-section" style="margin-top:12px; border-top: 1px solid #bddce7; padding-top: 12px;">
+              <div class="fs-section-header">
+                <span class="fs-title">Stroke (Garis Tepi)</span>
+                <button id="btnStrokeToggle" class="fs-eye-btn" onclick="toggleStrokeEnabled()" title="Toggle Stroke">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19">
+                    </path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <div id="strokeBodyPanel" class="hidden">
+                <div class="prop-row-split">
+                  <div>
+                    <label class="prop-label">Tipe Garis</label>
+                    <select id="propBorderStyle" onchange="onStrokeStyleChange(this.value)" class="prop-select">
+                      <option value="solid">Garis Solid</option>
+                      <option value="dashed">Garis Putus-Putus</option>
+                      <option value="dotted">Garis Titik-Titik</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="prop-label">Posisi</label>
+                    <select id="strokePositionSelect" class="prop-select" onchange="onStrokePositionChange(this.value)">
+                      <option value="inside">Inside (Dalam)</option>
+                      <option value="center">Center (Tengah)</option>
+                      <option value="outside">Outside (Luar)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="fs-color-row" style="margin-top: 8px;">
+                  <input type="color" id="strokeColorInput" class="fs-swatch-input" oninput="onStrokeColor(this.value)"
+                    value="#38a0c4" title="Pilih warna stroke" />
+                  <input type="text" id="strokeHexInput" class="fs-hex-input" maxlength="6" placeholder="38a0c4"
+                    oninput="onStrokeHexText(this.value)" />
+                  <input type="number" id="strokeOpacityInput" class="fs-opacity-input" min="0" max="100" value="100"
+                    oninput="onStrokeOpacity(this.value); document.getElementById('strokeOpacitySlider').value=this.value;" />
+                  <span class="fs-percent">%</span>
+                </div>
+                <div class="fs-slider-row">
+                  <input type="range" id="strokeOpacitySlider" min="0" max="100" value="100" class="prop-range"
+                    oninput="document.getElementById('strokeOpacityInput').value=this.value; onStrokeOpacity(this.value);" />
+                </div>
+
+                <div class="prop-row" style="margin-top:8px;">
+                  <label class="prop-label">Lebar Garis (<span id="strokeWeightLbl">1</span>px)</label>
+                  <div class="slider-number-row">
+                    <input type="range" id="strokeWeightSlider" min="1" max="20" value="1" class="prop-range"
+                      oninput="document.getElementById('strokeWeightLbl').innerText=this.value; document.getElementById('strokeWeightInput').value=this.value; onStrokeWeight(this.value);" />
+                    <input type="number" id="strokeWeightInput" min="1" max="100" value="1"
+                      class="prop-input-number prop-input-mini"
+                      oninput="const v=Math.max(1,parseInt(this.value)||1); document.getElementById('strokeWeightLbl').innerText=v; document.getElementById('strokeWeightSlider').value=Math.min(v,20); onStrokeWeight(v);" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Action inside drawer -->
+          <div class="drawer-actions">
+            <button class="btn-drawer-delete" onclick="deleteSelectedElement()">
+              <img src="/static/image/icon/delete.svg" style="width: 20px; height: 20px;" alt="Hapus">
+              Hapus Komponen Ini
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Layers Panel Sidebar (Admin Only - Slides in from left) -->
+    <div id="layersPanel" class="layers-panel hidden">
+      <div class="layers-header">
+        <span class="layers-title">Sistem Layer</span>
+        <button class="layers-close" onclick="toggleLayersPanel()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="layers-content" id="layersContent">
+        <!-- Rendered layers tree goes here -->
+      </div>
+    </div>
+
+    <!-- Background Remover Modal -->
+    <div id="rembgModal" class="modal-overlay hidden"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 20050; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+      <div class="modal-card"
+        style="background: white; border-radius: 16px; width: 92%; max-width: 460px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.3); font-family: system-ui, sans-serif;">
+        <div class="modal-header"
+          style="padding: 16px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #fdfdfd;">
+          <h3 style="margin: 0; font-size: 18px; color: #2c5d6b; font-weight: 700;">Hapus Latar Belakang (rembg)</h3>
+          <button onclick="closeRembgModal()"
+            style="background: none; border: none; font-size: 20px; cursor: pointer; color: #888;">✕</button>
+        </div>
+        <div class="modal-body"
+          style="padding: 20px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px;">
+          <!-- Loading state -->
+          <div id="rembgLoadingState" class="hidden"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; gap: 16px;">
+            <div class="loader-spinner"></div>
+            <span style="font-size: 14px; color: #555;">Memproses gambar menggunakan AI rembg...</span>
+          </div>
+          <!-- Editor state -->
+          <div id="rembgEditorState" style="display: flex; flex-direction: column; gap: 12px; flex: 1;">
+            <div class="editor-toolbar"
+              style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; background: #f5f9fa; padding: 8px 12px; border-radius: 8px; border: 1px solid #e2edf0;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button id="btnRembgErase" class="btn-toolbar-tool active" onclick="setRembgTool('erase')"
+                  style="padding: 6px 12px; border-radius: 6px; border: 1px solid #38a0c4; background: #38a0c4; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">✕
+                  Kuas Hapus</button>
+                <button id="btnRembgRestore" class="btn-toolbar-tool" onclick="setRembgTool('restore')"
+                  style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; background: white; color: #333; font-weight: 600; cursor: pointer; font-size: 13px;">✔
+                  Kuas Pulihkan</button>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #555;">
+                <span>Ukuran Kuas:</span>
+                <input type="range" id="rembgBrushSize" min="5" max="100" value="20"
+                  oninput="document.getElementById('rembgBrushSizeVal').innerText = this.value" style="width: 100px;" />
+                <span id="rembgBrushSizeVal">20</span>px
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button onclick="undoRembgBrush()"
+                  style="padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 12px;">Undo</button>
+                <button onclick="redoRembgBrush()"
+                  style="padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 12px;">Redo</button>
+                <button onclick="resetRembgBrush()"
+                  style="padding: 6px 10px; border-radius: 6px; border: 1px solid #f8d7da; background: #f8d7da; color: #721c24; cursor: pointer; font-size: 12px; font-weight: bold;">Reset</button>
+              </div>
+            </div>
+            <!-- Canvas container wrapper with vertical scrolling and no height capping for canvas -->
+            <div
+              style="display: block; text-align: center; background: #eef2f5; border-radius: 8px; border: 1px dashed #ccc; padding: 20px; overflow: auto; max-height: 55vh; width: 100%; box-sizing: border-box;">
+              <canvas id="rembgCanvas"
+                style="display: inline-block; max-width: 100%; height: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.15); cursor: crosshair; background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; background-color: #eee;"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"
+          style="padding: 16px 20px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 10px; background: #fdfdfd;">
+          <button onclick="closeRembgModal()"
+            style="padding: 8px 18px; border-radius: 8px; border: 1px solid #ccc; background: white; font-size: 13px; font-weight: 600; cursor: pointer; color: #555;">Batal</button>
+          <button id="btnRembgApply" onclick="applyRembgResult()"
+            style="padding: 8px 18px; border-radius: 8px; border: none; background: #38a0c4; color: white; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 6px rgba(56,160,196,0.3);">Terapkan
+            Hasil</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Cropper / Resizer Modal -->
+    <div id="bgCropModal" class="modal-overlay hidden"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 20050; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+      <div class="modal-card"
+        style="background: white; border-radius: 16px; width: 92%; max-width: 460px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.3); font-family: system-ui, sans-serif;">
+        <div class="modal-header"
+          style="padding: 16px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #fdfdfd;">
+          <h3 style="margin: 0; font-size: 18px; color: #2c5d6b; font-weight: 700;">Resize & Crop Gambar Latar</h3>
+          <button onclick="closeBgCropModal()"
+            style="background: none; border: none; font-size: 20px; cursor: pointer; color: #888;">✕</button>
+        </div>
+        <div class="modal-body"
+          style="padding: 20px; flex: 1; overflow: auto; background: #eef2f5; max-height: 55vh; width: 100%; box-sizing: border-box; text-align: center; display: block;">
+          <div style="position: relative; display: inline-block; max-width: 100%;">
+            <canvas id="bgCropCanvas"
+              style="box-shadow: 0 4px 10px rgba(0,0,0,0.15); cursor: crosshair; max-width: 100%; height: auto; display: block;"></canvas>
+          </div>
+        </div>
+        <div class="modal-footer"
+          style="padding: 16px 20px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #fdfdfd;">
+          <span style="font-size: 11px; color: #666; font-style: italic;">Geser kotak crop. Tarik sudut kotak untuk
+            meresize area crop.</span>
+          <div style="display: flex; gap: 10px;">
+            <button onclick="closeBgCropModal()"
+              style="padding: 8px 18px; border-radius: 8px; border: 1px solid #ccc; background: white; font-size: 13px; font-weight: 600; cursor: pointer; color: #555;">Batal</button>
+            <button onclick="applyBgCrop()"
+              style="padding: 8px 18px; border-radius: 8px; border: none; background: #38a0c4; color: white; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 6px rgba(56,160,196,0.3);">Potong
+              & Terapkan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Alert / Toast -->
+    <div id="toast" class="toast-notif">Desain berhasil disimpan!</div>
+  </div>
+  <textarea id="landingPageData" style="display: none;">{{ landing_page_data|safe }}</textarea>
+  <script>
+    window.unique_id = "{{ unique_id }}";
+    window.landing_page_data = document.getElementById("landingPageData").value;
+    window.isAdmin = "{{ is_admin }}" === "True" || "{{ is_admin }}" === "true";
+    window.actorName = "{{ name }}";
+    window.actorFoto = "{{ foto_visual }}";
+  </script>
+  <script src="/static/js/landingpage_builder.js"></script>
+</body>
+
+</html>

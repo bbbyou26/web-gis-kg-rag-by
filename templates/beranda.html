@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Platform Pemetaan Ekosistem UMKM Berbasis Data - Mengintegrasikan Web GIS, Knowledge Graph, dan Retrieval-Augmented Generation (RAG) untuk pertumbuhan ekonomi lokal.">
+    <title>Ekosistem UMKM Berbasis Data - Mendorong Pertumbuhan Ekonomi Lokal</title>
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="/static/css/web_page/global.css">
+    <link rel="stylesheet" href="/static/css/web_page/beranda.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/image/icon.ico">
+</head>
+
+<body>
+
+    <!-- HEADER & NAVBAR (SOLID & CLEAN) -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo" id="logo-brand">
+                <img src="/static/image/logo.svg" alt="Logo UMKM">
+                <span>2211080</span>
+            </a>
+
+            <!-- Hamburger Menu for Mobile -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link active">Beranda</a></li>
+                <li><a href="/tentang.html" class="nav-link" style="pointer-events: none; opacity: 0.7;">Tentang</a>
+                </li>
+                <li><a href="/uji-coba.html" class="nav-link" style="pointer-events: none; opacity: 0.7;">Uji Coba</a>
+                </li>
+                <li><a href="/auth" class="btn btn-primary" id="btn-header-coba">Coba Sekarang</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section id="home" class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <h1>Membangun Ekosistem UMKM Berbasis Data untuk Mendorong Pertumbuhan Ekonomi Lokal</h1>
+                    <p>Dengan menggabungkan teknologi GIS, Knowledge Graph, dan AI Generatif, sistem ini menjadi fondasi
+                        menuju ekosistem UMKM yang lebih terhubung, informatif, dan adaptif terhadap perkembangan zaman.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="/auth" class="btn btn-primary">Coba Sekarang</a>
+                        <a href="/tentang.html" class="btn btn-outline"
+                            style="pointer-events: none; opacity: 0.7;">Pelajari Lebih Lanjut</a>
+                    </div>
+                </div>
+
+                <!-- Hero Video Display -->
+                <div class="hero-video-container">
+                    <video class="hero-video" autoplay loop muted playsinline>
+                        <source src="/static/image/home.mp4" type="video/mp4">
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- TENTANG SECTION -->
+        <section id="tentang" class="bg-white">
+            <div class="container">
+                <div class="tentang-intro">
+                    <h2>Pentingnya Digitalisasi & Integrasi UMKM</h2>
+                    <p>UMKM merupakan tulang punggung perekonomian yang berperan penting dalam menciptakan lapangan
+                        kerja, meningkatkan daya beli masyarakat, serta menggerakkan pertumbuhan ekonomi secara
+                        berkelanjutan. Di balik besarnya potensi tersebut, masih banyak informasi mengenai pelaku usaha
+                        yang tersebar dan belum terdigitalisasi secara optimal. Akibatnya, masyarakat kesulitan
+                        menemukan informasi usaha, pelaku UMKM kehilangan peluang promosi, dan pemerintah maupun
+                        pemangku kepentingan menghadapi keterbatasan dalam menyusun kebijakan yang berbasis data.</p>
+                </div>
+
+                <div class="tentang-grid">
+                    <!-- Tantangan 1: Masyarakat -->
+                    <div class="tentang-card">
+                        <div class="card-icon-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <h3>Kesulitan Masyarakat</h3>
+                        <p>Perubahan perilaku konsumen yang semakin mengandalkan platform digital menuntut akses
+                            informasi yang cepat dan akurat. Tanpa platform terintegrasi, masyarakat kesulitan menemukan
+                            penyedia produk lokal yang sesuai dengan kebutuhan mereka.</p>
+                    </div>
+
+                    <!-- Tantangan 2: Pelaku Usaha -->
+                    <div class="tentang-card">
+                        <div class="card-icon-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <h3>Peluang Promosi Terbatas</h3>
+                        <p>Banyak pelaku usaha kehilangan peluang promosi yang optimal karena informasi usaha mereka
+                            tersebar. Diperlukan ekosistem terpadu untuk mengenalkan keunikan produk lokal dan
+                            memperluas jangkauan pasar.</p>
+                    </div>
+
+                    <!-- Tantangan 3: Pemerintah -->
+                    <div class="tentang-card">
+                        <div class="card-icon-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <h3>Kebijakan Minim Data</h3>
+                        <p>Pemerintah menghadapi keterbatasan informasi dalam menyusun kebijakan ekonomi lokal. Tanpa
+                            data persebaran dan keterkaitan yang jelas, program pengembangan UMKM rentan salah sasaran.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PILAR TEKNOLOGI & INTERACTIVE SIMULATORS (UJI COBA) -->
+        <section id="uji-coba">
+            <div class="container">
+                <div class="uji-coba-intro text-center" style="margin-bottom: 56px;">
+                    <h2>Solusi yang Ditawarkan</h2>
+                    <p
+                        style="max-width: 750px; margin: 12px auto 0 auto; font-size: 1.1rem; line-height: 1.7; color: var(--text-dark);">
+                        Platform kami menghadirkan tiga solusi inovatif untuk mengintegrasikan data pelaku usaha secara
+                        cerdas, menyediakan profil promosi digital, dan memetakan potensi wilayah secara spasial.
+                    </p>
+                </div>
+
+                <div class="uji-coba-grid">
+                    <!-- 1. Chatbot AI Simulator -->
+                    <div class="simulator-card">
+                        <div class="sim-header">
+                            <img src="/static/image/actor/chatbot.svg" alt="Chatbot AI">
+                            <div class="sim-title-container">
+                                <span class="sim-title-name">Chatbot AI</span>
+                                <span class="sim-title-status">Online • Uji Coba AI</span>
+                            </div>
+                        </div>
+
+                        <!-- Chat messages scroll area -->
+                        <div class="sim-chat-body" id="sim-chat-messages">
+                            <div class="sim-message bot">
+                                <div class="sim-bubble">
+                                    Halo! Saya Chatbot AI Agent berbasis RAG. Klik salah satu pertanyaan di bawah ini
+                                    untuk melihat simulasi pencarian data UMKM secara cerdas dan faktual.
+                                </div>
+                            </div>
+                            <div class="sim-message user">
+                                <div class="sim-bubble">Bagaimana hubungan rantai pasok antara Pengrajin Kayu dan Toko
+                                    Mebel?</div>
+                            </div>
+                            <div class="sim-message bot">
+                                <div class="sim-bubble">
+                                    <strong>Hasil Analisis Knowledge Graph:</strong><br>
+                                    Berdasarkan relasi semantik entitas bisnis di database:<br><br>
+                                    <ul>
+                                        <li><strong>Pengrajin Kayu (Hulu)</strong> mensuplai bahan baku mentah (Kayu
+                                            Jati/Mahoni bersertifikat) ke <strong>3 Distributor Utama</strong>.</li>
+                                        <li><strong>Distributor Utama</strong> mendistribusikan kayu olahan setengah
+                                            jadi ke <strong>8 Toko Mebel Lokal</strong> di area industri kreatif.</li>
+                                        <li>Terdeteksi <strong>potensi kolaborasi baru</strong>: 2 Pengrajin Kayu di
+                                            Kelurahan Cihapit memiliki sisa limbah serutan kayu yang bisa dialokasikan
+                                            untuk <strong>UMKM Kerajinan Tangan Souvenir</strong> terdekat.</li>
+                                    </ul><br>
+                                    Sinergi rantai pasok ini meminimalkan biaya logistik hingga <strong>15%</strong>
+                                    melalui pemetaan rute terdekat.
+                                </div>
+                                <div class="ragas-card">
+                                    <div class="ragas-title">Evaluasi Framework RAGAS</div>
+                                    <div class="ragas-metrics">
+                                        <div class="metric">
+                                            <span class="metric-label">Faithfulness (Akurasi Fakta)</span>
+                                            <div class="metric-bar-container">
+                                                <div class="metric-bar" style="width: 93%"></div>
+                                            </div>
+                                            <span class="metric-value">0.93</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span class="metric-label">Answer Relevance (Relevansi Jawaban)</span>
+                                            <div class="metric-bar-container">
+                                                <div class="metric-bar" style="width: 95%"></div>
+                                            </div>
+                                            <span class="metric-value">0.95</span>
+                                        </div>
+                                    </div>
+                                    <div class="ragas-footer">Respons Terverifikasi Bebas Halusinasi</div>
+                                </div>
+                            </div>
+                            <div class="sim-message user">
+                                <div class="sim-bubble">Di mana potensi celah bisnis retail yang belum tergarap di
+                                    Kelurahan Dago?</div>
+                            </div>
+                            <div class="sim-message bot">
+                                <div class="sim-bubble">
+                                    <strong>Hasil Analisis Celah Rantai Nilai (AI &amp; Spatial):</strong><br>
+                                    Analisis menunjukkan ketidakseimbangan pasokan dan permintaan di beberapa sektor
+                                    retail Kelurahan Dago:<br><br>
+                                    <ul>
+                                        <li><strong>Kepadatan Kafe Kopi</strong>: Sangat Tinggi (Indeks Persaingan:
+                                            0.89). *Tidak direkomendasikan untuk wirausahawan baru*.</li>
+                                        <li><strong>Celah Retail Terbuka</strong>: Minimarket Bahan Organik &amp; Sayur
+                                            Segar Harian. Indeks kebutuhan warga di area Dago atas mencapai
+                                            <strong>0.78</strong>, namun penyedia lokal terdekat berjarak &gt;2.5 km.
+                                        </li>
+                                        <li><strong>Rekomendasi Lokasi</strong>: Sepanjang Jl. Dago Pojok bagian barat
+                                            untuk menangkap pasar residensial padat penduduk.</li>
+                                    </ul>
+                                </div>
+                                <div class="ragas-card">
+                                    <div class="ragas-title">Evaluasi Framework RAGAS</div>
+                                    <div class="ragas-metrics">
+                                        <div class="metric">
+                                            <span class="metric-label">Faithfulness (Akurasi Fakta)</span>
+                                            <div class="metric-bar-container">
+                                                <div class="metric-bar" style="width: 95%"></div>
+                                            </div>
+                                            <span class="metric-value">0.95</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span class="metric-label">Answer Relevance (Relevansi Jawaban)</span>
+                                            <div class="metric-bar-container">
+                                                <div class="metric-bar" style="width: 92%"></div>
+                                            </div>
+                                            <span class="metric-value">0.92</span>
+                                        </div>
+                                    </div>
+                                    <div class="ragas-footer">Respons Terverifikasi Bebas Halusinasi</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick suggestion questions acting as input triggers -->
+                        <div class="sim-footer-controls">
+                            <div class="sim-footer-label">Pilih pertanyaan simulasi:</div>
+                            <div class="sim-questions-container">
+                                <button class="sim-question-btn" data-question="q1">
+                                    Tunjukkan persebaran UMKM kuliner di Kecamatan Coblong.
+                                </button>
+                                <button class="sim-question-btn" data-question="q2">
+                                    Bagaimana hubungan rantai pasok antara Pengrajin Kayu dan Toko Mebel?
+                                </button>
+                                <button class="sim-question-btn" data-question="q3">
+                                    Di mana potensi celah bisnis retail yang belum tergarap di Kelurahan Dago?
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Landing Page Builder Simulator -->
+                    <div class="simulator-card">
+                        <div class="sim-header">
+                            <img src="/static/image/icon/edit_builder.svg" alt="Builder Icon" width="24" height="24">
+                            <div class="sim-title-container">
+                                <span class="sim-title-name">Landing Page Builder</span>
+                                <span class="sim-title-status">Desain Halaman UMKM</span>
+                            </div>
+                        </div>
+
+                        <div class="builder-sim-body">
+                            <div class="builder-controls">
+                                <div class="control-group">
+                                    <label>Pilih Profil Usaha</label>
+                                    <select id="builder-select-profile">
+                                        <option value="kopi">Kopi Cantik Dago</option>
+                                        <option value="mebel">Mebel Jati Abadi</option>
+                                        <option value="kerajinan">Kerajinan Bambu Jaya</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <label>Pilih Tema Warna</label>
+                                    <div class="theme-colors-select">
+                                        <div class="theme-dot theme-blue" data-theme="blue" title="Biru Modern"></div>
+                                        <div class="theme-dot theme-green active" data-theme="green"
+                                            title="Hijau Emerald"></div>
+                                        <div class="theme-dot theme-orange" data-theme="orange" title="Oranye Hangat">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="builder-preview-panel">
+                                <div class="preview-browser-header">
+                                    <span class="dot dot-red"></span>
+                                    <span class="dot dot-yellow"></span>
+                                    <span class="dot dot-green"></span>
+                                    <span class="preview-url">2211080.id/kopidicantik</span>
+                                </div>
+                                <div class="preview-screen-content" id="builder-preview-card">
+                                    <div class="preview-hero-banner" id="preview-banner"></div>
+                                    <div class="preview-profile-info">
+                                        <h4 id="preview-title">Kopi Cantik Dago</h4>
+                                        <span class="preview-sector" id="preview-sector">Kuliner - Kafe Kopi</span>
+                                        <p id="preview-desc">Menyajikan kopi arabika pilihan dari pegunungan Jawa Barat
+                                            dengan proses seduh manual yang otentik dan nyaman untuk bersantai.</p>
+                                        <a href="/auth" class="btn btn-primary" id="preview-btn-visit"
+                                            style="font-size: 0.75rem; padding: 6px 12px; width: 100%; margin-top: 10px; pointer-events: none;">Kunjungi
+                                            Website</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Analisis Buffering Spasial Simulator -->
+                    <div class="simulator-card">
+                        <div class="sim-header">
+                            <img src="/static/image/icon/ai-pin.svg" alt="Buffering Icon" width="24" height="24">
+                            <div class="sim-title-container">
+                                <span class="sim-title-name">Analisis Buffering Spasial</span>
+                                <span class="sim-title-status">Visualisasi Radius Wilayah</span>
+                            </div>
+                        </div>
+
+                        <div class="buffering-sim-body">
+                            <div class="buffering-map-area">
+                                <div class="mockup-map-grid"></div>
+                                <img src="/static/image/icon/ai-pin.svg" class="map-center-pin" alt="Center Pin">
+                                <div class="buffer-circle-overlay" id="buffer-overlay"></div>
+                                <img src="/static/image/actor/usaha.svg" class="competitor-pin pin-c1 visible"
+                                    id="cpin-1" alt="Usaha">
+                                <img src="/static/image/actor/usaha.svg" class="competitor-pin pin-c2" id="cpin-2"
+                                    alt="Usaha">
+                                <img src="/static/image/actor/usaha.svg" class="competitor-pin pin-c3" id="cpin-3"
+                                    alt="Usaha">
+                                <img src="/static/image/actor/usaha.svg" class="competitor-pin pin-c4" id="cpin-4"
+                                    alt="Usaha">
+                            </div>
+
+                            <div class="buffering-controls">
+                                <div class="radius-selector">
+                                    <span class="selector-label">Radius Buffering:</span>
+                                    <div class="radius-btns-row">
+                                        <button class="radius-btn active" data-radius="500">500m</button>
+                                        <button class="radius-btn" data-radius="1000">1000m</button>
+                                        <button class="radius-btn" data-radius="1500">1500m</button>
+                                    </div>
+                                </div>
+
+                                <div class="buffering-stats-panel" id="buffering-stats">
+                                    <div class="stat-row">
+                                        <span class="stat-name">Radius Terpilih:</span>
+                                        <span class="stat-val" id="stat-radius">500 meter</span>
+                                    </div>
+                                    <div class="stat-row">
+                                        <span class="stat-name">Jumlah Usaha:</span>
+                                        <span class="stat-val" id="stat-count">1 Usaha</span>
+                                    </div>
+                                    <div class="stat-list-row"
+                                        style="margin-top: 4px; border-top: 1px solid var(--bg-light); padding-top: 4px; display: flex; flex-direction: column; gap: 2px;">
+                                        <span class="stat-name"
+                                            style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500;">Daftar
+                                            Usaha:</span>
+                                        <span class="stat-val" id="stat-list"
+                                            style="font-size: 0.72rem; color: var(--text-medium); font-weight: 500; text-align: left;">Kopi
+                                            Cantik Dago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- DAMPAK & MANFAAT SECTION -->
+        <section id="dampak" class="bg-white">
+            <div class="container text-center">
+                <h2>Dampak Nyata Untuk Setiap Pemangku Kepentingan</h2>
+                <p style="max-width: 700px; margin: 0 auto 16px auto;">Platform kami mengubah data mentah menjadi
+                    wawasan berharga yang memberdayakan masyarakat, pelaku usaha, calon wirausahawan, dan pemerintah
+                    lokal secara terukur.</p>
+
+                <div class="dampak-grid">
+                    <!-- Pelaku Usaha -->
+                    <div class="dampak-card">
+                        <div class="dampak-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Pelaku Usaha</h3>
+                        <p>Meningkatkan visibilitas bisnis secara digital dan memperluas jangkauan promosi produk agar
+                            dikenal lebih luas.</p>
+                    </div>
+
+                    <!-- Masyarakat -->
+                    <div class="dampak-card">
+                        <div class="dampak-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                        </div>
+                        <h3>Masyarakat</h3>
+                        <p>Menemukan produk maupun layanan lokal yang paling dekat dan sesuai kebutuhan dengan mudah dan
+                            instan.</p>
+                    </div>
+
+                    <!-- Calon Wirausahawan -->
+                    <div class="dampak-card">
+                        <div class="dampak-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                        </div>
+                        <h3>Wirausahawan</h3>
+                        <p>Memperoleh gambaran lengkap mengenai celah pasar dan peluang bisnis baru yang masih terbuka
+                            lebar.</p>
+                    </div>
+
+                    <!-- Pemerintah -->
+                    <div class="dampak-card">
+                        <div class="dampak-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Pemerintah</h3>
+                        <p>Mendapatkan data analitik yang kuat untuk memetakan potensi ekonomi daerah dan merancang
+                            bantuan usaha yang tepat sasaran.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALL TO ACTION BANNER -->
+        <section class="cta-banner">
+            <div class="container">
+                <h2>Ubah Data Menjadi Aset Strategis</h2>
+                <p>Bergabunglah dengan ekosistem bisnis modern yang mendorong kolaborasi, inovasi, dan pertumbuhan
+                    ekonomi yang lebih inklusif dan berkelanjutan.</p>
+                <a href="/auth" class="btn btn-primary"
+                    style="background: var(--bg-white); color: var(--navy-dark); box-shadow: 0 4px 15px rgba(255,255,255,0.15);">Coba
+                    Sekarang</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-top">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <img src="/static/image/logo.svg" alt="Logo UMKM">
+                    <span>2211080</span>
+                </a>
+                <p>Menghubungkan teknologi GIS, Knowledge Graph, dan AI Generatif untuk memperkuat ekonomi lokal.</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-link-group">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="/tentang.html" style="pointer-events: none; opacity: 0.7;">Tentang</a></li>
+                        <li><a href="/uji-coba.html" style="pointer-events: none; opacity: 0.7;">Uji Coba</a></li>
+                    </ul>
+                </div>
+                <div class="footer-link-group">
+                    <h4>Akses Layanan</h4>
+                    <ul>
+                        <li><a href="/auth">Masuk (Login)</a></li>
+                        <li><a href="/auth">Daftar Akun</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>&copy; 2026 2211080. Hak Cipta Dilindungi Undang-Undang.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/static/js/global.js"></script>
+</body>
+
+</html>

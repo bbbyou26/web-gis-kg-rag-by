@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Form</title>
+  <link rel="stylesheet" href="/static/css/auth.css" />
+  <link rel="stylesheet" href="/static/css/notification.css" />
+
+  <link rel="icon" type="image/x-icon" href="/static/image/icon.ico">
+</head>
+
+<body>
+  <!-- LOGIN USER -->
+  <div class="app">
+    <div class="form-box" id="loginUser">
+      <h2>Login</h2>
+      <form action="/login" method="POST">
+        <input type="text" name="nama_akun" placeholder="Nama" />
+        <input type="password" name="password" placeholder="Password" />
+
+        <button style="width: 100%; margin: 10px">Login</button>
+      </form>
+      <p style="text-align: center; font-size: 13px">
+        <a href="#" onclick="showForm('register')">Buat akun baru</a>
+      </p>
+
+    </div>
+
+    <!-- REGISTER -->
+    <div class="form-box" id="register" style="display: none">
+      <h2>Register</h2>
+      <form action="/register" method="POST" enctype="multipart/form-data">
+        <input type="text" name="nama_akun" placeholder="Nama Akun" />
+        <input type="text" name="nama" placeholder="Nama" />
+        <input type="password" name="password" placeholder="Password" />
+
+        <!-- Upload Foto -->
+        <div class="multi-upload">
+          <!-- Tambahkan ini di dalam div .multi-upload, sebelum label upload -->
+          <p style="font-size: 13px; color: #555; margin-bottom: 6px">
+            Tambahkan foto profil agar orang berinteraksi dengan Anda
+          </p>
+
+          <label class="upload-box-small">
+            Upload Foto
+            <input type="file" name="foto" accept="image/*" onchange="previewImage(event)" />
+          </label>
+
+          <div class="preview-grid" id="preview"></div>
+        </div>
+
+        <button style="width: 100%; margin: 10px">Daftar</button>
+      </form>
+
+      <p style="text-align: center; font-size: 13px">
+        <a href="#" onclick="showForm('loginUser')">Kembali ke Login</a>
+      </p>
+    </div>
+
+
+    <div id="loginInvalidAlertOverlay" class="notif-alert-overlay">
+      <div class="notif-alert-box">
+        <div class="notif-alert-icon">
+          <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="notif-alert-message">
+          <h3>Peringatan !!!</h3>
+          <p>
+            Maaf, nama akun atau password anda salah!
+          </p>
+        </div>
+        <button class="notif-alert-btn" onclick="closeLoginInvalidAlert()">
+          Tutup
+        </button>
+      </div>
+    </div>
+
+    <!-- REGISTER ALERT -->
+    <div id="registerInvalidAlertOverlay" class="notif-alert-overlay">
+      <div class="notif-alert-box">
+        <div class="notif-alert-icon">
+          <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="notif-alert-message">
+          <h3>Peringatan !!!</h3>
+          <p>
+            Maaf akun anda tidak terdaftar silahkan klik mendaftar.
+          </p>
+        </div>
+        <button class="notif-alert-btn" onclick="closeRegisterInvalidAlert()">
+          Tutup
+        </button>
+      </div>
+    </div>
+    <!-- REGISTER FIeLD ALERT -->
+    <div id="registerFieldInvalidAlertOverlay" class="notif-alert-overlay">
+      <div class="notif-alert-box">
+        <div class="notif-alert-icon">
+          <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="notif-alert-message">
+          <h3>Peringatan !!!</h3>
+          <p>
+            Maaf Semua field wajib diisi!
+          </p>
+        </div>
+        <button class="notif-alert-btn" onclick="closeRegisterAccountFieldInvalidAlert()">
+          Tutup
+        </button>
+      </div>
+    </div>
+    <!-- REGISTER NAME ACCOUNT ALERT -->
+    <div id="registerNameInvalidAlertOverlay" class="notif-alert-overlay">
+      <div class="notif-alert-box">
+        <div class="notif-alert-icon">
+          <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="notif-alert-message">
+          <h3>Peringatan !!!</h3>
+          <p>
+            Maaf Nama akun sudah digunakan!
+          </p>
+        </div>
+        <button class="notif-alert-btn" onclick="closeRegisterNameAccountInvalidAlert()">
+          Tutup
+        </button>
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loader-overlay" style="display: none">
+      <div class="loader-box">
+        <img src="/static/image/actor/job-creation.svg" class="jc-loader-img" alt="Loading" />
+        <div class="loading">Loading<span class="dots"></span></div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div id="success-overlay" style="display: none">
+      <div class="message-box">
+        <div class="checkmark">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="heading">Sukses!</div>
+        <div class="content" id="success-message-text">
+          Akun berhasil dibuat! Silakan login kembali.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  function showForm(type) {
+    document.getElementById("loginUser").style.display = "none";
+    document.getElementById("register").style.display = "none";
+
+    document.getElementById(type).style.display = "block";
+  }
+  // ambil parameter dari URL
+  const params = new URLSearchParams(window.location.search);
+  const error = params.get("error");
+
+  // tampilkan alert sesuai kondisi
+  if (error === "wrong_password") {
+    document.getElementById("loginInvalidAlertOverlay").style.display =
+      "flex";
+  }
+
+  if (error === "user_not_found") {
+    document.getElementById("registerInvalidAlertOverlay").style.display =
+      "flex";
+  }
+  // REGISTER
+  if (error === "register_field_invalid") {
+    document.getElementById(
+      "registerFieldInvalidAlertOverlay",
+    ).style.display = "flex";
+    showForm("register"); // 🔥 PINDAH KE REGISTER
+  }
+
+  if (error === "register_name_used") {
+    document.getElementById("registerNameInvalidAlertOverlay").style.display =
+      "flex";
+    showForm("register"); // 🔥 PINDAH KE REGISTER
+  }
+  // SUCCESS REGISTER
+  if (error === "register_success") {
+    document.getElementById("success-overlay").style.display = "flex";
+
+    // auto hilang + redirect ke login
+    setTimeout(() => {
+      document.getElementById("success-overlay").style.display = "none";
+      showForm("loginUser");
+    }, 2000);
+  }
+  function closeLoginInvalidAlert() {
+    document.getElementById("loginInvalidAlertOverlay").style.display =
+      "none";
+  }
+
+  function closeRegisterInvalidAlert() {
+    document.getElementById("registerInvalidAlertOverlay").style.display =
+      "none";
+  }
+  function closeRegisterAccountFieldInvalidAlert() {
+    document.getElementById(
+      "registerFieldInvalidAlertOverlay",
+    ).style.display = "none";
+  }
+
+  function closeRegisterNameAccountInvalidAlert() {
+    document.getElementById("registerNameInvalidAlertOverlay").style.display =
+      "none";
+  }
+
+  // 🔥 LOADER SAAT SUBMIT FORM
+  const forms = document.querySelectorAll("form");
+
+  forms.forEach((form) => {
+    form.addEventListener("submit", function () {
+      document.getElementById("loader-overlay").style.display = "flex";
+    });
+  });
+  // preview foto
+  function previewImage(event) {
+    const preview = document.getElementById("preview");
+    preview.innerHTML = "";
+
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.classList.add("preview-img");
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+
+  const inputAkunList = document.querySelectorAll('input[name="nama_akun"]');
+
+  inputAkunList.forEach((input) => {
+    input.addEventListener("blur", function () {
+      let val = input.value.trim().toLowerCase();
+
+      if (val && !val.includes("@2211080.com")) {
+        input.value = val + "@2211080.com";
+      }
+    });
+  });
+</script>
+
+</html>

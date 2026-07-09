@@ -1,0 +1,467 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  background: #eaeaea;
+  overflow: hidden;
+}
+
+/* PHONE FRAME EFFECT ON DESKTOP */
+@media (min-width: 501px) {
+  body {
+    background: #f1f5f9;
+    perspective: 1000px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .app {
+    box-shadow: 
+      0 0 0 8px #1e1b4b,
+      0 0 0 10px #312e81,
+      0 20px 50px rgba(0,0,0,0.3);
+    border-radius: 40px;
+    height: calc(100vh - 120px) !important;
+    max-height: 550px;
+    width: 420px;
+    border: 5px solid #1e1b4b;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .app::before {
+    content: "";
+    position: absolute;
+    left: -16px;
+    top: 100px;
+    width: 4px;
+    height: 40px;
+    background: #1e1b4b;
+    border-radius: 4px 0 0 4px;
+    box-shadow: 0 50px 0 #1e1b4b, 0 100px 0 #1e1b4b;
+    z-index: 10002;
+  }
+
+  .app::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background: #0f172a;
+    border-radius: 50%;
+    z-index: 10001;
+    border: 2px solid #1e1b4b;
+    box-shadow: inset 0 0 2px rgba(255,255,255,0.3);
+  }
+}
+
+/* APP CONTAINER tetap seperti semula */
+/* APP CONTAINER */
+.app {
+  width: 100%;
+  max-width: 500px;
+  min-height: 100dvh;
+  height: 100dvh;
+  background: #bddce7;
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  background-image: url("../image/job.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.app::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(242, 247, 249, 0.8);
+  /* overlay semi putih */
+  z-index: 0;
+  border-radius: inherit;
+  /* sesuaikan dengan radius .app */
+}
+
+/* hapus semua position absolute di .form-box jika ada */
+.form-box {
+  background: #f2f7f9;
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 340px;
+  padding: 25px 20px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.4s ease;
+
+  /* pastikan statis, tidak absolute */
+  position: static;
+}
+
+/* ===== REVISI H2 (MODERN HEADER) ===== */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2d3436;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+select {
+  background: #f2f7f9;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  padding: 6px 16px;
+  width: 100%;
+  max-width: 350px;
+  height: 42px;
+  font-size: 14px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+/* animasi masuk */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
+  background: #f2f7f9;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  padding: 6px 16px;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  min-height: 40px;
+  resize: none;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin: 10px 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid #74b9ff;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(116, 185, 255, 0.2);
+}
+
+/* tombol utama */
+button {
+  background: linear-gradient(135deg, #38a0c4, #8d98e0);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(56, 160, 196, 0.3);
+  filter: brightness(1.08);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* link bawah */
+p a {
+  color: #38a0c4;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+p a:hover {
+  text-decoration: underline;
+  color: #8d98e0;
+}
+
+/* container upload */
+.multi-upload {
+  margin: 10px;
+}
+
+/* upload box kecil modern */
+.upload-box-small {
+  width: 120px;
+  height: 40px;
+  border: 2px dashed #38a0c4;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #f2f7f9;
+  color: #38a0c4;
+  font-size: 13px;
+  transition: all 0.25s ease;
+  gap: 5px;
+  /* sedikit ruang jika pakai icon */
+}
+
+.upload-box-small:hover {
+  background: #e0f0f5;
+  transform: scale(1.05);
+}
+
+/* preview grid gambar */
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 60px);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* gambar preview */
+.preview-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  animation: fadeZoom 0.3s ease;
+}
+
+.preview-img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* animasi muncul */
+@keyframes fadeZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* sembunyikan default choose file */
+input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ===== LOADER OVERLAY ===== */
+#loader-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-box {
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #38a0c4, #8d98e0) border-box;
+  border: 2px solid transparent;
+  padding: 35px;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+  animation: jcPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.loading {
+  font-size: 16px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #38a0c4, #8d98e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+}
+
+.dots::after {
+  content: '...';
+  animation: jcDots 1.5s infinite;
+}
+
+/* ===== SUCCESS OVERLAY ===== */
+#success-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-box {
+  background: white;
+  padding: 35px;
+  border-radius: 28px;
+  border: 2px solid #4CAF50;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+  animation: jcPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 800;
+  color: #4CAF50;
+}
+
+.content {
+  font-size: 14px;
+  color: #2c5d6b;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+@keyframes jcPop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes jcDots {
+  0% {
+    content: '';
+  }
+
+  33% {
+    content: '.';
+  }
+
+  66% {
+    content: '..';
+  }
+
+  100% {
+    content: '...';
+  }
+}
+
+/* ===== JOB CREATION LOGO LOADER ANIMATIONS ===== */
+.jc-loader-img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  /* Tint to vibrant blue/lavender to match the gradient */
+  filter: invert(70%) sepia(85%) saturate(1400%) hue-rotate(190deg) brightness(105%) contrast(105%);
+  /* Entrance fall once, then loop the banting motion */
+  animation:
+    jcFallOnce 0.8s cubic-bezier(0.47, 0, 0.745, 0.715) forwards,
+    jcBantingLoop 1.5s infinite 0.8s ease-in-out;
+}
+
+@keyframes jcFallOnce {
+  0% {
+    transform: translateY(-350px) rotate(-180deg) scale(0.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes jcBantingLoop {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  20% {
+    transform: translateY(-60px) rotate(15deg);
+  }
+
+  40% {
+    transform: translateY(0) rotate(-10deg);
+  }
+
+  60% {
+    transform: translateY(-25px) rotate(5deg);
+  }
+
+  80% {
+    transform: translateY(0) rotate(-2deg);
+  }
+}

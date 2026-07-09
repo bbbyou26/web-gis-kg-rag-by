@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X7 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="12mm" height="12mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 1200 1200"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#244A6A;stroke-width:20}
+    .fil3 {fill:none}
+    .fil5 {fill:#1E88E5}
+    .fil4 {fill:#38A0C4}
+    .fil2 {fill:#992E2E}
+    .fil0 {fill:#D61415}
+    .fil1 {fill:#DDDCDA}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_3013370785344">
+   <ellipse class="fil0" cx="601" cy="867" rx="215" ry="193"/>
+   <ellipse class="fil1" cx="606" cy="864" rx="168" ry="151"/>
+   <ellipse class="fil0" cx="607" cy="865" rx="126" ry="113"/>
+   <path class="fil2" d="M780 166l72 178c20,4 38,14 52,29l-75 -186c-8,-19 -30,-29 -49,-21z"/>
+   <path class="fil2" d="M925 415c-18,-46 -68,-71 -115,-58 2,2 4,4 6,6 20,21 35,45 46,71 0,0 0,1 0,1 13,32 18,66 16,99 0,0 0,0 0,0 44,-21 65,-73 47,-119z"/>
+   <path class="fil2" d="M725 737c116,-47 172,-181 125,-297 -47,-116 -180,-173 -296,-126l-73 30c-117,47 -173,180 -126,297 47,116 180,172 296,125l74 -29zm20 -141l-212 85c-58,24 -126,-4 -149,-63 -24,-59 4,-126 63,-150l211 -85c59,-24 126,5 150,63 24,59 -5,126 -63,150z"/>
+   <path class="fil2" d="M564 586l-25 -63c-8,-20 -31,-30 -51,-22 -20,8 -29,30 -22,50l25 64c8,19 31,29 51,21 20,-7 30,-30 22,-50z"/>
+   <path class="fil2" d="M727 524l-25 -63c-8,-20 -31,-30 -51,-22 -20,7 -30,30 -22,50l25 63c8,20 31,30 51,22 20,-8 30,-30 22,-50z"/>
+   <path class="fil2" d="M215 400l72 179c-11,16 -18,36 -17,56l-76 -186c-7,-19 2,-41 21,-49z"/>
+   <path class="fil2" d="M284 680c-19,-45 -1,-98 43,-121 0,2 0,5 0,8 0,29 5,57 16,83 0,0 0,0 0,0 13,33 34,61 58,83 0,0 0,0 0,0 -47,15 -97,-8 -117,-53z"/>
+   <path class="fil2" d="M807 733l-65 26c-12,5 -17,23 -11,39 7,16 22,25 35,20l64 -27c13,-5 18,-22 12,-38 -7,-16 -23,-25 -35,-20z"/>
+   <path class="fil3 str0" d="M832 749c46,-22 80,-62 95,-111 14,-48 8,-100 -19,-144"/>
+   <ellipse class="fil1" cx="601" cy="867" rx="63" ry="57"/>
+   <polygon class="fil4" points="631,870 557,804 562,859 529,902 "/>
+   <line class="fil3 str0" x1="562" y1="859" x2="230" y2= "770" />
+   <circle class="fil5 str0" cx="229" cy="763" r="18"/>
+  </g>
+ </g>
+</svg>

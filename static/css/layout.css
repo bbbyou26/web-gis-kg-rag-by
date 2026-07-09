@@ -1,0 +1,1051 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* GLOBAL SCROLLBAR */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8d98e0;
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #38a0c4;
+}
+
+/* UNIVERSAL TABLE STYLING (For AI Output) */
+.table-scroll-wrapper {
+  width: 100% !important;
+  overflow-x: auto !important;
+  margin: 20px 0 !important;
+  border-radius: 12px !important;
+  border: 1px solid #d0dde3 !important;
+  background: #fff !important;
+  -webkit-overflow-scrolling: touch;
+  display: block;
+}
+
+/* Custom Scrollbar for Table — Mini Blue */
+.table-scroll-wrapper::-webkit-scrollbar {
+  height: 4px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-track {
+  background: #eef2f4;
+  border-radius: 99px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #38a0c4;
+  border-radius: 99px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #2282a3;
+}
+
+table {
+  width: 100%;
+  min-width: 650px !important;
+  /* Force scroll on narrow screens */
+  border-collapse: collapse !important;
+  font-size: 13px !important;
+  table-layout: auto !important;
+}
+
+th,
+td {
+  border: 1px solid #eef2f4 !important;
+  padding: 14px 18px !important;
+  text-align: left !important;
+  line-height: 1.6 !important;
+  white-space: nowrap !important;
+  /* CRITICAL: Prevent column stacking */
+  vertical-align: middle !important;
+}
+
+th {
+  background: #f2f7f9;
+  color: #2c5d6b;
+  font-weight: 900 !important;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+tr:nth-child(even) {
+  background: #fafbfc;
+}
+
+tr:hover {
+  background: #f0f7f9;
+}
+
+/* AEO Actor Link - VIBRANT BOLD BLUE (Clean) */
+.actor-link {
+  font-weight: 900 !important;
+  color: #38a0c4 !important;
+  /* Extremely vibrant blue */
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: all 0.2s;
+  display: inline-block !important;
+  pointer-events: auto !important;
+}
+
+.actor-link strong {
+  color: inherit !important;
+  font-weight: 900 !important;
+}
+
+.actor-link:hover {
+  color: #ff4757 !important;
+  text-decoration-color: #ff4757 !important;
+  transform: translateY(-1px);
+}
+
+/* Chat & IDE Typography Neatness */
+.bubble p,
+.analysis-content p {
+  margin-bottom: 22px !important;
+  /* Increased for better legibility */
+  line-height: 1.85 !important;
+  display: block;
+}
+
+.bubble br {
+  content: "";
+  display: block;
+  margin-bottom: 12px;
+}
+
+.bubble ul,
+.bubble ol,
+.analysis-content ul,
+.analysis-content ol {
+  margin: 18px 0 !important;
+  padding-left: 28px !important;
+}
+
+.bubble li,
+.analysis-content li {
+  margin-bottom: 10px !important;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: #eaeaea;
+  /* Base background */
+  overflow: hidden;
+  /* Prevent body scroll */
+  margin: 0;
+}
+
+/* PHONE FRAME EFFECT ON DESKTOP */
+@media (min-width: 501px) {
+  body {
+    background: #f1f5f9;
+    perspective: 1000px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .app {
+    /* Main Bezel */
+    box-shadow:
+      0 0 0 8px #1e1b4b,
+      /* Outer Frame Navy */
+      0 0 0 10px #312e81,
+      /* Outer Edge Detail */
+      0 20px 50px rgba(0, 0, 0, 0.3);
+    border-radius: 40px;
+    height: calc(100vh - 120px) !important;
+    /* Extremely safe height */
+    max-height: 550px;
+    width: 420px;
+    /* Wider for desktop search bar */
+    border: 5px solid #1e1b4b;
+    /* Inner Bezel */
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .topbar-search {
+    max-width: 350px !important;
+    /* As requested */
+  }
+
+  /* Physical Buttons on the side */
+  .app::before {
+    content: "";
+    position: absolute;
+    left: -16px;
+    top: 100px;
+    width: 4px;
+    height: 40px;
+    background: #1e1b4b;
+    border-radius: 4px 0 0 4px;
+    box-shadow: 0 50px 0 #1e1b4b, 0 100px 0 #1e1b4b;
+    /* Volume and Power buttons */
+    z-index: 10002;
+  }
+
+  /* Hole-punch Camera at top center */
+  .app::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background: #0f172a;
+    border-radius: 50%;
+    z-index: 10001;
+    border: 2px solid #1e1b4b;
+    box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* APP CONTAINER */
+.app {
+  width: 100%;
+  max-width: 500px;
+  min-height: 100dvh;
+  height: 100dvh;
+  background: #f2f7f9;
+  position: relative;
+  overflow: hidden;
+  /* CRITICAL: No scroll! */
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* NON-ADMIN UI RESTRICTIONS */
+.non-admin .actor-main,
+.non-admin .controls-left {
+  filter: grayscale(1);
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+.non-admin .actor-main img,
+.non-admin .btn-circle {
+  pointer-events: none !important;
+}
+
+.topbar-container {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  background: rgba(189, 220, 231, 0.5);
+  border-radius: 20px;
+  border: 2px solid #8d98e0;
+  height: 60px;
+  width: calc(100% - 20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  z-index: 10;
+}
+
+.topbar-search {
+  background: #f2f7f9;
+  border-radius: 20px;
+  border: 2px solid #e0e0e0;
+  height: 50px;
+  max-width: 285px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.topbar-search textarea {
+  flex: 1;
+  height: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  background: transparent;
+
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 8px 6px;
+  box-sizing: border-box;
+}
+
+.btn-search {
+  background: #38a0c4;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+  height: 32px;
+  white-space: nowrap;
+}
+
+.btn-search:hover {
+  opacity: 0.85;
+}
+
+/* CLUSTER */
+.cluster-wrapper {
+  position: absolute;
+  top: 75px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  background: rgba(189, 220, 231, 0.85);
+  /* #bddce7 dengan 50% transparansi */
+  border: 2px solid #8d98e0;
+  border-radius: 24px;
+  padding: 4px;
+  gap: 4px;
+  z-index: 10;
+}
+
+.cluster-main {
+  min-width: 130px;
+  height: 45px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: #38a0c4;
+  cursor: pointer;
+}
+
+.cluster-tool {
+  width: 36px;
+  height: 36px;
+  background: #a8d1e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cluster-options {
+  position: absolute;
+  top: 58px;
+  left: 0;
+  width: 180px;
+  background: #bddce7;
+  border: 2px solid #8d98e0;
+  border-radius: 18px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 20;
+  font-size: 14px;
+  font-weight: 600;
+  color: #38a0c4;
+}
+
+.cluster-options>div {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(56, 160, 196, 0.3);
+  transition: background 0.2s ease;
+}
+
+.cluster-options>div:last-child {
+  border-bottom: none;
+}
+
+.cluster-options>div:hover {
+  background: #a8d1e0;
+}
+
+.actor-main {
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #8d98e0;
+  border-width: 2px;
+  padding: 0px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 100px;
+  position: absolute;
+  top: 120px;
+  /* sejajar dengan custom zoom */
+  right: 5px;
+  /* di kanan, dekat custom zoom */
+  text-align: center;
+  z-index: 1000;
+  /* di atas map dan tombol zoom */
+  background: rgba(189, 220, 231, 0.85);
+  /* #bddce7 dengan 50% transparansi */
+  color: #38a0c4;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.actor-main img {
+  width: 50px;
+  /* ukuran gambar */
+  height: 50px;
+  object-fit: contain;
+}
+
+/* CONTAINER ACTOR */
+
+/* SWITCH ICON (MINI) */
+.actor-switch {
+  position: absolute;
+  top: 75px;
+  right: 5px;
+  display: flex;
+  gap: 6px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* RESPONSIVE TINY MOBILE (< 300px) */
+@media (max-width: 300px) {
+  .app {
+    border: 4px solid #8d98e0;
+    /* The "wrapper" appearing below 300px */
+    box-sizing: border-box;
+  }
+
+  .actor-switch {
+    right: 5px;
+    left: auto;
+    width: 140px;
+    /* Limit width to force sliding */
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 5px;
+    scrollbar-width: none;
+    /* Hide scrollbar Firefox */
+    -ms-overflow-style: none;
+    /* Hide scrollbar IE/Edge */
+    scroll-snap-type: x mandatory;
+  }
+
+  .actor-switch::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar Chrome/Safari */
+  }
+
+  .actor-switch img {
+    flex: 0 0 35px;
+    /* Don't shrink icons */
+    scroll-snap-align: start;
+  }
+}
+
+/* ICON MINI */
+.actor-switch img {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px;
+  background: rgba(189, 220, 231, 0.85);
+  border: 2px solid #8d98e0;
+  transition: 0.2s;
+}
+
+.actor-switch img:hover {
+  transform: scale(1.1);
+}
+
+/* ACTIVE ICON */
+.actor-switch img.active {
+  background: #e6e6e6;
+}
+
+/* TOMBOL SATELIT - MODERN GLASS */
+.map-toggle {
+  position: absolute;
+  bottom: 90px;
+  left: 12px;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 16px;
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 500;
+  color: #8d98e0;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.25),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* ICON SATELIT */
+/* ICON SVG SATELIT - WARNA BRAND */
+.map-toggle::before {
+  display: none;
+}
+
+/* HOVER */
+.map-toggle:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.3),
+    inset 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+/* ACTIVE STATE (SAAT MODE SATELIT ON) */
+.map-toggle.active {
+  background: linear-gradient(135deg, #38a0c4, #8d98e0);
+  border: 1px solid transparent;
+  box-shadow: 0 6px 20px rgba(56, 160, 196, 0.5);
+}
+
+/* MAP SATELIT LOOK - LEBIH CINEMATIC */
+.map-satelit {
+  filter: contrast(1.15) saturate(1.3) brightness(0.9);
+  transition: filter 0.4s ease;
+}
+
+/* OVERLAY CINEMATIC */
+.map-satelit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at center, transparent 55%, rgba(0, 0, 0, 0.4)),
+    linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent 40%);
+}
+
+/* OPTIONAL: GLOW HALUS DI PINGGIR MAP */
+.map-satelit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.3);
+}
+
+/* MAP */
+#map {
+  position: absolute;
+  inset: 0;
+  /* top:0 right:0 bottom:0 left:0 */
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: #f2f7f9;
+  /* Match app background */
+}
+
+/* FIX: Remove tile gaps (white grid lines) */
+.leaflet-tile {
+  border: none !important;
+  outline: 1px solid transparent;
+  /* Use hardware acceleration and slight overlap to hide gaps */
+  -webkit-backface-visibility: hidden;
+}
+
+.leaflet-container {
+  background: #f2f7f9 !important;
+}
+
+.custom-zoom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: absolute;
+  top: 250px;
+  /* jarak dari atas map */
+  right: 10px;
+  z-index: 1000;
+}
+
+.zoom-btn {
+  width: 45px;
+  height: 45px;
+  background: #38a0c4;
+  color: white;
+  font-size: 24px;
+  border-radius: 50%;
+  border: 2px solid #8d98e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.zoom-btn:hover {
+  background: #a8d1e0;
+  color: #38a0c4;
+}
+
+.job-creation {
+  position: absolute;
+  top: 455px;
+  /* di bawah actor-main (actor-main top:75px, height:100px) */
+  right: 8px;
+  /* sejajar dengan actor-main di sisi kanan */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  /* tanpa background */
+}
+
+/* PROFILE WRAPPER */
+.profile-wrapper {
+  position: absolute;
+  /* di dalam .app */
+  top: 0;
+  right: -320px;
+  /* awal di luar .app */
+  width: 200px;
+  height: auto;
+  background: #f2f7f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: right 0.4s ease;
+  z-index: 2000;
+}
+
+/* Saat muncul */
+.profile-wrapper.active {
+  right: 0px;
+  /* muncul di dalam .app, dari kanan */
+}
+
+/* TOP PROFILE */
+.top-profile {
+  background: #dfecf1;
+  width: 100%;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+/* IMG PROFILE BULAT */
+.open-profile {
+  background: #38a0c4;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.open-profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  /* 🔥 INI KUNCINYA */
+}
+
+#imgProfile {
+  background: #38a0c4;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#imgProfile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* NAMA dan SUB-NAMA */
+/* NAMA dan SUB-NAMA */
+.name-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* ambil sisa ruang di .top-profile */
+  min-width: 0;
+  /* wajib agar flex item bisa shrink */
+  overflow: hidden;
+  /* sembunyikan kelebihan teks */
+}
+
+/* Nama tetap ukuran 14px, warna biru, tapi aman untuk teks panjang */
+.nama {
+  font-size: 14px;
+  font-weight: 600;
+  color: #38a0c4;
+  white-space: nowrap;
+  /* jangan pecah ke baris baru */
+  overflow: hidden;
+  /* sembunyikan kelebihan teks */
+  text-overflow: ellipsis;
+  /* tambahkan "..." jika terlalu panjang */
+}
+
+/* Sub-nama tetap ukuran 12px, warna abu, aman untuk teks panjang */
+.status {
+  font-size: 12px;
+  color: #7a8a94;
+  white-space: nowrap;
+  /* jangan pecah ke baris baru */
+  overflow: hidden;
+  /* sembunyikan kelebihan teks */
+  text-overflow: ellipsis;
+  /* tambahkan "..." jika terlalu panjang */
+}
+
+/* MENU PROFIL */
+.menu-profil {
+  background: #bddce7;
+  border: 2px solid #8d98e0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 30px;
+  color: #38a0c4;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.menu-profil:hover {
+  background: #a8d1e0;
+}
+
+/* ===== TOAST NOTIFICATION SYSTEM ===== */
+.toast-container {
+  position: fixed;
+  bottom: 25px;
+  /* Sesuaikan agar di tengah bawah */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.toast {
+  min-width: 260px;
+  padding: 12px 24px;
+  background: rgba(60, 60, 167, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: inherit;
+  font-size: 14px;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  transform: translateY(30px);
+  pointer-events: auto;
+}
+
+.toast.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.info {
+  border-left: 4px solid #38a0c4;
+}
+
+.toast.success {
+  border-left: 4px solid #4CAF50;
+}
+
+.toast.error {
+  border-left: 4px solid #f44336;
+}
+
+/* ===== DELETE CONFIRM OVERLAY ===== */
+.delete-confirm-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.delete-confirm-modal {
+  background: #f2f7f9;
+  border-radius: 20px;
+  border: 2px solid #8d98e0;
+  padding: 28px 24px;
+  width: 85%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+  from {
+    transform: scale(0.9) translateY(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.delete-confirm-icon {
+  margin-bottom: 12px;
+}
+
+.delete-confirm-svg {
+  width: 48px;
+  height: 48px;
+  filter: hue-rotate(0deg) brightness(0.9);
+}
+
+.delete-confirm-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #2c5d6b;
+  margin-bottom: 8px;
+}
+
+.delete-confirm-desc {
+  font-size: 13px;
+  color: #7a8a94;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.delete-confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-confirm {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-confirm.no {
+  background: #e0e0e0;
+  color: #555;
+}
+
+.btn-confirm.no:hover {
+  background: #d0d0d0;
+}
+
+.btn-confirm.yes {
+  background: #ff6b6b;
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+.btn-confirm.yes:hover {
+  background: #e55a5a;
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ===== PREMIUM SEARCH RESULT POPUP (Hanya untuk hasil cari alamat) ===== */
+.search-result-popup .leaflet-popup-content-wrapper {
+  background: rgba(242, 247, 249, 0.25) !important;
+  color: #2c5d6b !important;
+  border-radius: 20px !important;
+  padding: 12px !important;
+  border: 2px solid #8d98e0 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+
+.search-result-popup .leaflet-popup-content {
+  margin: 32px 15px 12px 15px !important;
+  /* Spasi aman 32px agar TIDAK nabrak tombol close */
+  line-height: 1.6 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  word-wrap: break-word !important;
+  width: auto !important;
+  max-width: 220px !important;
+}
+
+.search-result-popup .leaflet-popup-close-button {
+  top: 10px !important;
+  right: 10px !important;
+  width: 26px !important;
+  height: 26px !important;
+  background: #ff6b6b !important;
+  color: white !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4) !important;
+  z-index: 10005 !important;
+}
+
+.search-result-popup .leaflet-popup-tip {
+  background: #8d98e0 !important;
+}
+
+
+/* ===== MARKER ANIMATION ===== */
+@keyframes pinWobble {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-12deg);
+  }
+
+  75% {
+    transform: rotate(12deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.marker-pin-animated {
+  animation: pinWobble 1.8s ease-in-out infinite;
+  transform-origin: bottom center;
+  display: block;
+}
+
+/* ===== ACCESS PERMISSION OVERLAY CARDS ===== */
+.permission-request-card {
+  background: white;
+  border: 1px solid #eef2f4;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.permission-request-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.btn-confirm-permission {
+  background: #38a0c4;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(56, 160, 196, 0.2);
+}
+
+.btn-confirm-permission:hover:not(:disabled) {
+  background: #2a8cae;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(56, 160, 196, 0.3);
+}
+
+.btn-confirm-permission:disabled {
+  background: #2ecc71;
+  color: white;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+#toggleIzinkanAkses {
+  accent-color: #38a0c4;
+}

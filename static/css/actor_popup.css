@@ -1,0 +1,230 @@
+/* =========================
+      OVERRIDE LEAFLET POPUP
+    ========================= */
+
+/* Bungkus luar Leaflet */
+.leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+
+/* Hilangkan segitiga bawah */
+.leaflet-popup-tip {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Konten Leaflet */
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: auto !important;
+}
+
+/* Style tombol close Leaflet */
+.leaflet-popup-close-button {
+  top: 6px !important;
+  /* jarak dari atas popup */
+  right: 6px !important;
+  /* jarak dari kanan popup */
+  width: 24px !important;
+  height: 24px !important;
+  background: #ff6b6b !important;
+  /* merah custom */
+  color: white !important;
+  font-weight: bold !important;
+  border-radius: 50% !important;
+  /* bulat */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 10001 !important;
+  /* di atas elemen lain */
+  font-size: 14px !important;
+  text-decoration: none !important;
+  /* hapus underline default <a> */
+  line-height: 1 !important;
+  border: none !important;
+  /* hilangkan border default */
+}
+
+/* =========================
+      ACTOR POPUP (MASTER STYLE)
+    ========================= */
+.actor-popup {
+  width: 200px;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+}
+
+/* HEADER */
+.actor-popup-header {
+  position: relative;
+  /* penting agar anak absolute posisi relatif ke header */
+  background: #dfecf1;
+  border: 2px solid #e0e0e0;
+  border-bottom: none;
+  border-radius: 18px 18px 0 0;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #38a0c4;
+  text-align: center;
+}
+
+.actor-popup-details {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  /* kiri sejajar tombol close */
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #b0b0b0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* CONTENT (tipis, nyatu) */
+.actor-popup-content {
+  padding: 6px;
+  background: #f9fcfd;
+  border-left: 2px solid #e0e0e0;
+  border-right: 2px solid #e0e0e0;
+}
+
+/* ACTION BUTTONS */
+.actor-popup-actions {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  background: #ffffff;
+  border: 2px solid #e0e0e0;
+  border-top: none;
+  border-radius: 0 0 18px 18px;
+}
+
+/* BUTTON BASE */
+.actor-btn {
+  flex: 1;
+  font-size: 11px;
+  padding: 6px 4px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* =========================
+      POPUP VISUAL (GAMBAR)
+    ========================= */
+.actor-popup-visual-wrapper {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.actor-popup-visual {
+  min-width: 90px;
+  min-height: 90px;
+  max-width: 180px;
+  max-height: 135px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* NAMA */
+.actor-popup-name {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: #2e7a99;
+  margin-bottom: 4px;
+}
+
+/* VARIANT */
+
+.view-actor {
+  background: none;
+  border: 1px solid #2e7a99;
+  color: #ffffff;
+}
+
+.edit-actor {
+  background: none;
+  border: 1px solid #706c6c;
+  color: #ffffff;
+}
+
+.delete-actor {
+  background: none;
+  border: 1px solid #ad3e3c;
+  color: #ffffff;
+}
+
+
+/* =========================
+      ACTOR LOCATION DISPLAY
+    ========================= */
+
+.actor-location-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ALAMAT (UTAMA) */
+.actor-address {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2e7a99;
+  line-height: 1.35;
+}
+
+/* KOORDINAT (SEKUNDER) */
+.actor-coord {
+  font-size: 10px;
+  color: #7a8a94;
+  font-style: italic;
+}
+
+/* Saat loading */
+.actor-address:empty::before {
+  content: "Mencari alamat...";
+  color: #a0b0b8;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.emoji-img,
+.emoji1-img {
+  vertical-align: middle;
+  object-fit: contain;
+  display: inline-block;
+  margin-top: -2px;
+}
+
+.emoji-img {
+  width: 1.9em;
+  height: 1.9em;
+}
+
+.emoji1-img {
+  width: 1.5em;
+  height: 1.5em;
+}
