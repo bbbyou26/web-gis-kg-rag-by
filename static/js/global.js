@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initRAGSimulator();
     initBuilderSimulator();
     initBufferingSimulator();
+    initTypewriterEffect();
+    initSimulatorToggles();
 });
 
 /**
@@ -417,3 +419,100 @@ function initBufferingSimulator() {
         });
     });
 }
+
+/**
+ * 7. TYPEWRITER EFFECT WITH INTERVAL REPEAT (10-12s)
+ */
+function initTypewriterEffect() {
+    const targets = [
+        { selector: '.hero-content h1', text: 'Membangun Ekosistem UMKM Berbasis Data untuk Mendorong Pertumbuhan Ekonomi Lokal' },
+        { selector: '.tentang-intro h2', text: 'Pentingnya Digitalisasi & Integrasi UMKM' },
+        { selector: '.uji-coba-intro h2', text: 'Solusi yang Ditawarkan' },
+        { selector: '#dampak h2', text: 'Dampak Nyata Untuk Setiap Pemangku Kepentingan' },
+        { selector: '.research-title', text: 'RANCANG BANGUN APLIKASI WEB GIS BERBASIS KNOWLEDGE GRAPH DAN RETRIEVAL-AUGMENTED GENERATION (RAG) UNTUK PEMETAAN DAN VISUALISASI LINGKUNGAN USAHA LOKAL' },
+        { selector: '.profile-name', text: 'Bayu Dwi Prasetyo' },
+        { selector: '.section-title-wrapper h2', text: 'Proyek Utama' }
+    ];
+
+    targets.forEach(item => {
+        const element = document.querySelector(item.selector);
+        if (!element) return;
+
+        const text = item.text;
+        
+        // Setup inner DOM structure
+        element.innerHTML = '';
+        const contentSpan = document.createElement('span');
+        contentSpan.className = 'typewriter-content';
+        const cursorSpan = document.createElement('span');
+        cursorSpan.className = 'typewriter-cursor';
+        cursorSpan.textContent = '|';
+        element.appendChild(contentSpan);
+        element.appendChild(cursorSpan);
+
+        let typingActive = false;
+
+        const type = () => {
+            if (typingActive) return;
+            typingActive = true;
+            contentSpan.textContent = '';
+            cursorSpan.style.opacity = '1';
+            let index = 0;
+            
+            const interval = setInterval(() => {
+                if (index < text.length) {
+                    contentSpan.textContent += text.charAt(index);
+                    index++;
+                } else {
+                    clearInterval(interval);
+                    cursorSpan.style.opacity = '0';
+                    typingActive = false;
+                    
+                    // Repeat after 11 seconds (10-12s interval)
+                    setTimeout(type, 11000);
+                }
+            }, 80); // 80ms per character
+        };
+
+        type();
+    });
+}
+
+/**
+ * 8. SIMULATOR TABS / TOGGLES
+ */
+function initSimulatorToggles() {
+    const selectors = document.querySelectorAll('.sim-selector-card');
+    const cards = document.querySelectorAll('.simulator-card');
+
+    if (!selectors.length || !cards.length) return;
+
+    selectors.forEach(selector => {
+        selector.addEventListener('click', () => {
+            const targetId = selector.getAttribute('data-target');
+            const targetCard = document.getElementById(targetId);
+
+            if (selector.classList.contains('active')) {
+                // If it is active, close/hide it
+                selector.classList.remove('active');
+                if (targetCard) targetCard.classList.remove('active');
+            } else {
+                // Remove active classes from all selectors and cards
+                selectors.forEach(s => s.classList.remove('active'));
+                cards.forEach(c => c.classList.remove('active'));
+
+                // Activate clicked target
+                selector.classList.add('active');
+                if (targetCard) {
+                    targetCard.classList.add('active');
+                    
+                    // Smooth scroll to the simulator card
+                    setTimeout(() => {
+                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                }
+            }
+        });
+    });
+}
+

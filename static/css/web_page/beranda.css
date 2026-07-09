@@ -341,8 +341,8 @@ header.scrolled {
 }
 
 .card-icon-box {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     background-color: var(--bg-light);
     border-radius: var(--radius-sm);
     display: flex;
@@ -417,11 +417,19 @@ header.scrolled {
 
 /* INTERACTIVE SIMULATOR (SOLID & CLEAN) */
 .simulator-card {
+    display: none; /* hidden initially */
+    max-width: 600px;
+    margin: 0 auto;
     border: 4px solid var(--navy-dark);
     border-radius: var(--radius-md);
     background-color: var(--bg-white);
     box-shadow: var(--shadow-lg);
     overflow: hidden;
+    animation: slideUp 0.4s ease-out;
+}
+
+.simulator-card.active {
+    display: block;
 }
 
 .sim-header {
@@ -1003,8 +1011,8 @@ header.scrolled {
 }
 
 .dampak-icon-box {
-    width: 42px;
-    height: 42px;
+    width: 50px;
+    height: 50px;
     background-color: var(--ice-blue);
     border-radius: var(--radius-sm);
     display: flex;
@@ -1329,5 +1337,82 @@ footer {
     .btn {
         padding: 10px 20px;
         font-size: 0.85rem;
+    }
+}
+
+/* ==========================================================================
+   SIMULATOR SELECTOR CARD INTERFACE
+   ========================================================================== */
+.simulator-selectors-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.sim-selector-card {
+    background-color: var(--bg-white);
+    border: 2px solid rgba(141, 152, 224, 0.2);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all var(--transition-normal);
+}
+
+.sim-selector-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+}
+
+.sim-selector-card.active {
+    border-color: var(--primary);
+    background-color: var(--ice-blue);
+    box-shadow: var(--shadow-md);
+}
+
+.sim-selector-icon {
+    width: 64px;
+    height: 64px;
+    background-color: var(--bg-light);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    border: 2px solid var(--ice-blue);
+    transition: all var(--transition-normal);
+}
+
+.sim-selector-card.active .sim-selector-icon {
+    background-color: var(--bg-white);
+    border-color: var(--primary);
+}
+
+.sim-selector-icon img {
+    width: 36px;
+    height: 36px;
+}
+
+.sim-selector-info h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    color: var(--navy-dark);
+}
+
+.sim-selector-info p {
+    font-size: 0.85rem;
+    color: var(--text-medium);
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .simulator-selectors-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 }

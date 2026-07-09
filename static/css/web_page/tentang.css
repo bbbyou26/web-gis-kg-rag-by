@@ -210,8 +210,9 @@
 .project-icon-box {
     width: 56px;
     height: 56px;
-    background-color: var(--navy-dark);
-    color: var(--bg-white);
+    background-color: transparent;
+    border: 2px solid var(--navy-dark);
+    color: var(--navy-dark);
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;

@@ -201,3 +201,84 @@ section {
     padding: 60px 0;
   }
 }
+
+/* ==========================================================================
+   INTERACTIONS & ANIMATIONS (PULSE & TYPEWRITER)
+   ========================================================================== */
+
+/* Pulse Animation for Buttons */
+@keyframes button-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(56, 160, 196, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(56, 160, 196, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 160, 196, 0);
+  }
+}
+
+.btn-pulse {
+  animation: button-pulse 2s infinite ease-in-out;
+}
+
+/* White background button pulse */
+.cta-banner .btn-pulse {
+  animation: button-pulse-white 2s infinite ease-in-out;
+}
+
+@keyframes button-pulse-white {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+/* Typewriter Cursor Styles */
+.typewriter-cursor {
+  display: inline;
+  animation: blink-caret 0.75s step-end infinite;
+  color: var(--primary);
+  margin-left: 2px;
+  font-weight: 300;
+}
+
+@keyframes blink-caret {
+  from, to { color: transparent }
+  50% { color: var(--primary); }
+}
+
+/* ==========================================================================
+   ROTATING BORDER GLOW ANIMATION
+   ========================================================================== */
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes spin-border {
+  0% {
+    --border-angle: 0deg;
+  }
+  100% {
+    --border-angle: 360deg;
+  }
+}
+
+.rotating-border {
+  position: relative;
+  z-index: 1;
+  border: 4px solid transparent !important;
+  border-radius: var(--radius-md) !important;
+  background: 
+    linear-gradient(var(--bg-white), var(--bg-white)) padding-box,
+    conic-gradient(from var(--border-angle), var(--navy-dark) 0%, var(--navy-dark) 70%, var(--primary) 85%, var(--secondary) 95%, var(--navy-dark) 100%) border-box !important;
+  animation: spin-border 4s linear infinite !important;
+}

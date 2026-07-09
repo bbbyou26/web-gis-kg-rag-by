@@ -55,6 +55,7 @@ def app_page():
 
 
 @app.route("/")
+@app.route("/beranda.html")
 def index():
     return render_template("beranda.html")
 
