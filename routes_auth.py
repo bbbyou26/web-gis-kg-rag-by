@@ -67,6 +67,7 @@ def tentang_page():
 
 
 @app.route("/auth")
+@app.route("/auth.html")
 def auth_page():
     return render_template("auth.html")
 
